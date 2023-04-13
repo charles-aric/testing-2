@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { withTranslation } from 'react-i18next'
+import React, { useState } from "react";
+import { withTranslation } from "react-i18next";
 import {
   Row,
   Col,
@@ -8,24 +8,24 @@ import {
   FormGroup,
   Form,
   Input,
-  Button
-} from 'reactstrap'
+  Button,
+} from "reactstrap";
 
 function Paypal(props) {
-  const clientId = useState(props.clientId || '')
-  const clientSecret = useState(props.clientSecret || '')
-  const sandbox = useState(!!props.sandbox)
-  const [clientIdError] = useState(null)
-  const [clientSecretError] = useState(null)
+  const clientId = useState(props.clientId || "");
+  const clientSecret = useState(props.clientSecret || "");
+  const sandbox = useState(!!props.sandbox);
+  const [clientIdError] = useState(null);
+  const [clientSecretError] = useState(null);
 
-  const { t } = props
-  console.log(clientIdError)
+  const { t } = props;
+  console.log(clientIdError);
   return (
     <Row className="mt-3">
       <div className="col">
         <Card className="shadow">
           <CardHeader className="border-0">
-            <h3 className="mb-0">{t('Paypal')}</h3>
+            <h3 className="mb-0">{t("Paypal")}</h3>
           </CardHeader>
           <Form>
             <div className="pl-lg-4">
@@ -33,24 +33,27 @@ function Paypal(props) {
                 <Col md="8">
                   <label
                     className="form-control-label"
-                    htmlFor="input-clientid">
-                    {t('Client ID')}
+                    htmlFor="input-clientid"
+                  >
+                    {t("Client ID")}
                   </label>
                   <FormGroup
                     className={
                       clientIdError === null
-                        ? ''
+                        ? ""
                         : clientIdError
-                          ? 'has-success'
-                          : 'has-danger'
-                    }>
+                        ? "has-success"
+                        : "has-danger"
+                    }
+                  >
                     <Input
                       className="form-control-alternative"
                       id="input-clientid"
                       placeholder="e.g AeGIgSX--JEVwoQgLjGOb8gh1DUJG0MFVgLc2mBIe6_V5NefV0LM3L78m01fLLI6U2FFB-qJr4ErrtL1"
                       type="text"
                       defaultValue={clientId}
-                      disabled></Input>
+                      disabled
+                    ></Input>
                   </FormGroup>
                 </Col>
               </Row>
@@ -58,31 +61,34 @@ function Paypal(props) {
                 <Col md="8">
                   <label
                     className="form-control-label"
-                    htmlFor="input-clientsecret">
-                    {t('Client Secret')}
+                    htmlFor="input-clientsecret"
+                  >
+                    {t("Client Secret")}
                   </label>
                   <FormGroup
                     className={
                       clientSecretError === null
-                        ? ''
+                        ? ""
                         : clientSecretError
-                          ? 'has-success'
-                          : 'has-danger'
-                    }>
+                        ? "has-success"
+                        : "has-danger"
+                    }
+                  >
                     <Input
                       className="form-control-alternative"
                       id="input-clientsecret"
                       placeholder="e.g EHAP6CSZt3kwzcpdxrpw16PqHEspw5wtJCVVux_95e2Qcwbeh6mQp9GncEbxnVFkEbJu4z1i-GuDDthf"
                       type="text"
                       defaultValue={clientSecret}
-                      disabled></Input>
+                      disabled
+                    ></Input>
                   </FormGroup>
                 </Col>
               </Row>
               <Row>
                 <Col md="8">
                   <label className="form-control-label" htmlFor="input-enable">
-                    {t('Sandbox')}
+                    {t("Sandbox")}
                   </label>
                   <FormGroup>
                     <label className="custom-toggle">
@@ -103,8 +109,9 @@ function Paypal(props) {
                     type="button"
                     color="primary"
                     disabled
-                    size="lg">
-                    {t('Save')}
+                    size="lg"
+                  >
+                    {t("Save")}
                   </Button>
                 </Col>
               </Row>
@@ -113,7 +120,7 @@ function Paypal(props) {
         </Card>
       </div>
     </Row>
-  )
+  );
 }
 
-export default withTranslation()(Paypal)
+export default withTranslation()(Paypal);

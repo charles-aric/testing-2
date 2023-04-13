@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
-import { withTranslation } from 'react-i18next'
-import { Container, Row, Card, Modal } from 'reactstrap'
-import OrderComponent from '../components/Order/Order'
-import OrdersData from '../components/Order/OrderData'
-import Header from '../components/Headers/Header.jsx'
-import { Query, compose, withApollo } from 'react-apollo'
-import gql from 'graphql-tag'
-import { getOrders } from '../apollo/server'
+import React, { useState } from "react";
+import { withTranslation } from "react-i18next";
+import { Container, Row, Card, Modal } from "reactstrap";
+import OrderComponent from "../components/Order/Order";
+import OrdersData from "../components/Order/OrderData";
+import Header from "../components/Headers/Header.jsx";
+import { Query, compose, withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import { getOrders } from "../apollo/server";
 
 const GET_ORDERS = gql`
   ${getOrders}
-`
-const Orders = props => {
-  const [detailsModal, setDetailModal] = useState(false)
-  const [order, setOrder] = useState(null)
-  const [search, setSearch] = useState('')
-  const [page, setPage] = useState(1)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
+`;
+const Orders = (props) => {
+  const [detailsModal, setDetailModal] = useState(false);
+  const [order, setOrder] = useState(null);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const toggleModal = order => {
-    setOrder(order)
-    setDetailModal(!detailsModal)
-  }
+  const toggleModal = (order) => {
+    setOrder(order);
+    setDetailModal(!detailsModal);
+  };
 
-  const { t } = props
+  const { t } = props;
   return (
     <>
       <Header />
@@ -35,17 +35,18 @@ const Orders = props => {
             <Card className="shadow">
               <Query
                 query={GET_ORDERS}
-                variables={{ page: page - 1, rows: rowsPerPage, search }}>
+                variables={{ page: page - 1, rows: rowsPerPage, search }}
+              >
                 {({ loading, error, data, subscribeToMore }) => {
                   // if (loading) return <tr><td>{t("Loading")}</td></tr>;
                   if (error) {
                     return (
                       <tr>
                         <td>
-                          `${t('Error')}! ${error.message}`
+                          `${t("Error")}! ${error.message}`
                         </td>
                       </tr>
-                    )
+                    );
                   }
                   return (
                     <OrdersData
@@ -59,7 +60,7 @@ const Orders = props => {
                       page={setPage}
                       rows={setRowsPerPage}
                     />
-                  )
+                  );
                 }}
               </Query>
             </Card>
@@ -70,13 +71,14 @@ const Orders = props => {
           size="lg"
           isOpen={detailsModal}
           toggle={() => {
-            toggleModal(null)
-          }}>
+            toggleModal(null);
+          }}
+        >
           <OrderComponent order={order} />
         </Modal>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default compose(withApollo, withTranslation())(Orders)
+export default compose(withApollo, withTranslation())(Orders);

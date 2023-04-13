@@ -1,23 +1,23 @@
-import React from 'react'
-import { withTranslation } from 'react-i18next'
-import { Container } from 'reactstrap'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
-import Header from '../components/Headers/Header.jsx'
-import { getConfiguration } from '../apollo/server'
-import OrderConfiguration from '../components/Configuration/Order/Order'
-import EmailConfiguration from '../components/Configuration/Email/Email'
-import PaypalConfiguration from '../components/Configuration/Paypal/Paypal'
-import StripeConfiguration from '../components/Configuration/Stripe/Stripe'
-import DeliveryConfiguration from '../components/Configuration/Delivery/Delivery'
-import CurrencyConfiguration from '../components/Configuration/Currency/Currency'
-import Loader from 'react-loader-spinner'
+import React from "react";
+import { withTranslation } from "react-i18next";
+import { Container } from "reactstrap";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+import Header from "../components/Headers/Header.jsx";
+import { getConfiguration } from "../apollo/server";
+import OrderConfiguration from "../components/Configuration/Order/Order";
+import EmailConfiguration from "../components/Configuration/Email/Email";
+import PaypalConfiguration from "../components/Configuration/Paypal/Paypal";
+import StripeConfiguration from "../components/Configuration/Stripe/Stripe";
+import DeliveryConfiguration from "../components/Configuration/Delivery/Delivery";
+import CurrencyConfiguration from "../components/Configuration/Currency/Currency";
+import Loader from "react-loader-spinner";
 
 const GET_CONFIGURATION = gql`
   ${getConfiguration}
-`
+`;
 
-const Configuration = props => {
+const Configuration = (props) => {
   return (
     <>
       <Header />
@@ -34,9 +34,9 @@ const Configuration = props => {
                   visible={loading}
                 />
               </Container>
-            )
+            );
           }
-          if (error) return 'Error :('
+          if (error) return "Error :(";
           return (
             <Container className="mt--7" fluid>
               <Loader
@@ -69,11 +69,11 @@ const Configuration = props => {
                 currencySymbol={data.configuration.currency_symbol}
               />
             </Container>
-          )
+          );
         }}
       </Query>
     </>
-  )
-}
+  );
+};
 
-export default withTranslation()(Configuration)
+export default withTranslation()(Configuration);

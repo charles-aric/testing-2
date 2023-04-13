@@ -1,9 +1,9 @@
 /*eslint-disable*/
-import React, { useState } from 'react'
-import { withTranslation } from 'react-i18next'
-import { NavLink as NavLinkRRD, Link } from 'react-router-dom'
+import React, { useState } from "react";
+import { withTranslation } from "react-i18next";
+import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
-import { PropTypes } from 'prop-types'
+import { PropTypes } from "prop-types";
 
 // reactstrap components
 import {
@@ -20,25 +20,25 @@ import {
   Nav,
   Container,
   Row,
-  Col
-} from 'reactstrap'
+  Col,
+} from "reactstrap";
 
-var ps
+var ps;
 
 function Sidebar(props) {
-  const [collapseOpen, collapseOpenSetter] = useState(false)
+  const [collapseOpen, collapseOpenSetter] = useState(false);
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
-    return props.location.pathname.indexOf(routeName) > -1 ? 'active' : ''
+    return props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
   }
   // toggles collapse between opened and closed (true/false)
   const toggleCollapse = () => {
-    collapseOpenSetter(prev => !prev)
-  }
+    collapseOpenSetter((prev) => !prev);
+  };
   // closes the collapse
   const closeCollapse = () => {
-    collapseOpenSetter(false)
-  }
+    collapseOpenSetter(false);
+  };
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes, t) => {
     return routes.map((prop, key) => {
@@ -48,39 +48,42 @@ function Sidebar(props) {
             to={prop.layout + prop.path}
             tag={NavLinkRRD}
             onClick={closeCollapse}
-            activeClassName="active">
+            activeClassName="active"
+          >
             <i className={prop.icon} />
             {t(prop.name)}
           </NavLink>
         </NavItem>
-      ) : null
-    })
-  }
-  const { t } = props
-  const { bgColor, routes, logo } = props
-  let navbarBrandProps
+      ) : null;
+    });
+  };
+  const { t } = props;
+  const { bgColor, routes, logo } = props;
+  let navbarBrandProps;
   if (logo && logo.innerLink) {
     navbarBrandProps = {
       to: logo.innerLink,
-      tag: Link
-    }
+      tag: Link,
+    };
   } else if (logo && logo.outterLink) {
     navbarBrandProps = {
       href: logo.outterLink,
-      target: '_blank'
-    }
+      target: "_blank",
+    };
   }
   return (
     <Navbar
       className="navbar-vertical fixed-left navbar-light bg-white"
       expand="md"
-      id="sidenav-main">
+      id="sidenav-main"
+    >
       <Container fluid>
         {/* Toggler */}
         <button
           className="navbar-toggler"
           type="button"
-          onClick={toggleCollapse}>
+          onClick={toggleCollapse}
+        >
           <span className="navbar-toggler-icon" />
         </button>
         {/* Brand */}
@@ -101,25 +104,26 @@ function Sidebar(props) {
                 <span className="avatar avatar-sm rounded-circle">
                   <img
                     alt="..."
-                    src={require('assets/img/theme/team-4-800x800.jpg')}
+                    src={require("assets/img/theme/team-4-800x800.jpg")}
                   />
                 </span>
               </Media>
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
               <DropdownItem className="noti-title" header tag="div">
-                <h6 className="text-overflow m-0">{t('Welcome')}!</h6>
+                <h6 className="text-overflow m-0">{t("Welcome")}!</h6>
               </DropdownItem>
               <DropdownItem divider />
               <DropdownItem
                 href="#pablo"
-                onClick={e => {
-                  e.preventDefault()
-                  localStorage.removeItem('user-enatega')
-                  props.history.push('/auth/login')
-                }}>
+                onClick={(e) => {
+                  e.preventDefault();
+                  localStorage.removeItem("user-enatega");
+                  props.history.push("/auth/login");
+                }}
+              >
                 <i className="ni ni-user-run" />
-                <span>{t('Logout')}</span>
+                <span>{t("Logout")}</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -146,7 +150,8 @@ function Sidebar(props) {
                 <button
                   className="navbar-toggler"
                   type="button"
-                  onClick={toggleCollapse}>
+                  onClick={toggleCollapse}
+                >
                   <span />
                   <span />
                 </button>
@@ -159,12 +164,12 @@ function Sidebar(props) {
         </Collapse>
       </Container>
     </Navbar>
-  )
+  );
 }
 
 Sidebar.defaultProps = {
-  routes: [{}]
-}
+  routes: [{}],
+};
 
 Sidebar.propTypes = {
   // links that will be displayed inside the component
@@ -179,8 +184,8 @@ Sidebar.propTypes = {
     // the image src of the logo
     imgSrc: PropTypes.string.isRequired,
     // the alt for the img
-    imgAlt: PropTypes.string.isRequired
-  })
-}
+    imgAlt: PropTypes.string.isRequired,
+  }),
+};
 
-export default withTranslation()(Sidebar)
+export default withTranslation()(Sidebar);

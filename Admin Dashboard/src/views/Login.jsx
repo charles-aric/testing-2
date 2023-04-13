@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { withTranslation } from 'react-i18next'
+import React, { useState } from "react";
+import { withTranslation } from "react-i18next";
 // reactstrap components
 import {
   Button,
@@ -13,54 +13,54 @@ import {
   InputGroupText,
   InputGroup,
   Col,
-  UncontrolledAlert
-} from 'reactstrap'
+  UncontrolledAlert,
+} from "reactstrap";
 
-import { Redirect } from 'react-router-dom'
-import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import { adminLogin } from '../apollo/server'
-import { validateFunc } from '../constraints/constraints'
+import { Redirect } from "react-router-dom";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+import { adminLogin } from "../apollo/server";
+import { validateFunc } from "../constraints/constraints";
 const LOGIN = gql`
   ${adminLogin}
-`
+`;
 
-const Login = props => {
-  const [email, setEmail] = useState('admin@enatega.com')
-  const [password, setPassword] = useState('enatega123')
-  const [emailError, setEmailError] = useState(null)
-  const [passwordError, setPasswordError] = useState(null)
-  const [error, setError] = useState(null)
+const Login = (props) => {
+  const [email, setEmail] = useState("admin@enatega.com");
+  const [password, setPassword] = useState("enatega123");
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [error, setError] = useState(null);
   const [redirectToReferrer, setRedirectToReferrer] = useState(
-    !!localStorage.getItem('user-enatega')
-  )
+    !!localStorage.getItem("user-enatega")
+  );
 
   const onBlur = (event, field) => {
-    if (field === 'email') {
-      setEmailError(!validateFunc({ email: email }, 'email'))
+    if (field === "email") {
+      setEmailError(!validateFunc({ email: email }, "email"));
     }
-    if (field === 'password') {
-      setPasswordError(!validateFunc({ password: password }, 'password'))
+    if (field === "password") {
+      setPasswordError(!validateFunc({ password: password }, "password"));
     }
-  }
+  };
   const validate = () => {
-    const EmailError = !validateFunc({ email: email }, 'email')
-    const PasswordError = !validateFunc({ password: password }, 'password')
-    setEmailError(EmailError)
-    setPasswordError(PasswordError)
-    return EmailError && PasswordError
-  }
+    const EmailError = !validateFunc({ email: email }, "email");
+    const PasswordError = !validateFunc({ password: password }, "password");
+    setEmailError(EmailError);
+    setPasswordError(PasswordError);
+    return EmailError && PasswordError;
+  };
 
-  const { from } = props.location.state || { from: { pathname: '/' } }
-  const { t } = props
-  if (redirectToReferrer) return <Redirect to={from} />
+  const { from } = props.location.state || { from: { pathname: "/" } };
+  const { t } = props;
+  if (redirectToReferrer) return <Redirect to={from} />;
   return (
     <>
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">
-              <small>{t('Sign in credentials')}</small>
+              <small>{t("Sign in credentials")}</small>
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
@@ -68,11 +68,12 @@ const Login = props => {
               <FormGroup
                 className={
                   emailError === null
-                    ? ''
+                    ? ""
                     : emailError
-                      ? 'has-success'
-                      : 'has-danger'
-                }>
+                    ? "has-success"
+                    : "has-danger"
+                }
+              >
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -81,11 +82,11 @@ const Login = props => {
                   </InputGroupAddon>
                   <Input
                     value={email}
-                    onChange={event => {
-                      setEmail(event.target.value)
+                    onChange={(event) => {
+                      setEmail(event.target.value);
                     }}
-                    onBlur={event => {
-                      onBlur(event, 'email')
+                    onBlur={(event) => {
+                      onBlur(event, "email");
                     }}
                     placeholder="Email"
                     type="email"
@@ -95,11 +96,12 @@ const Login = props => {
               <FormGroup
                 className={
                   passwordError === null
-                    ? ''
+                    ? ""
                     : passwordError
-                      ? 'has-success'
-                      : 'has-danger'
-                }>
+                    ? "has-success"
+                    : "has-danger"
+                }
+              >
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -108,11 +110,11 @@ const Login = props => {
                   </InputGroupAddon>
                   <Input
                     value={password}
-                    onChange={event => {
-                      setPassword(event.target.value)
+                    onChange={(event) => {
+                      setPassword(event.target.value);
                     }}
-                    onBlur={event => {
-                      onBlur(event, 'password')
+                    onBlur={(event) => {
+                      onBlur(event, "password");
                     }}
                     placeholder="Password"
                     type="password"
@@ -123,21 +125,22 @@ const Login = props => {
               <div className="text-center">
                 <Mutation
                   mutation={LOGIN}
-                  onCompleted={data => {
+                  onCompleted={(data) => {
                     localStorage.setItem(
-                      'user-enatega',
+                      "user-enatega",
                       JSON.stringify(data.adminLogin)
-                    )
-                    setRedirectToReferrer(true)
-                    setEmailError(null)
-                    setPasswordError(null)
+                    );
+                    setRedirectToReferrer(true);
+                    setEmailError(null);
+                    setPasswordError(null);
                   }}
-                  onError={error => {
-                    console.log('error', JSON.stringify(error))
-                    setEmailError(null)
-                    setPasswordError(null)
-                    setError(error.graphQLErrors[0].message)
-                  }}>
+                  onError={(error) => {
+                    console.log("error", JSON.stringify(error));
+                    setEmailError(null);
+                    setPasswordError(null);
+                    setError(error.graphQLErrors[0].message);
+                  }}
+                >
                   {(adminLogin, { loading, error }) => {
                     return (
                       <Button
@@ -145,15 +148,16 @@ const Login = props => {
                         color="primary"
                         type="button"
                         onClick={() => {
-                          setEmailError(null)
-                          setPasswordError(null)
+                          setEmailError(null);
+                          setPasswordError(null);
                           if (validate()) {
-                            adminLogin({ variables: { password, email } })
+                            adminLogin({ variables: { password, email } });
                           }
-                        }}>
-                        {t('Sign in')}
+                        }}
+                      >
+                        {t("Sign in")}
                       </Button>
-                    )
+                    );
                   }}
                 </Mutation>
               </div>
@@ -167,7 +171,7 @@ const Login = props => {
         </Card>
       </Col>
     </>
-  )
-}
+  );
+};
 
-export default withTranslation()(Login)
+export default withTranslation()(Login);

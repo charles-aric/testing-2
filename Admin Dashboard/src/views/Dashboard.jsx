@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 // node.js library that concatenates classes (strings)
 // react plugin used to create charts
-import { Line, Bar } from 'react-chartjs-2'
+import { Line, Bar } from "react-chartjs-2";
 // reactstrap components
 import {
   Button,
@@ -13,71 +13,71 @@ import {
   Row,
   FormGroup,
   Input,
-  Col
-} from 'reactstrap'
+  Col,
+} from "reactstrap";
 
-import Header from '../components/Headers/Header.jsx'
-import { Query } from 'react-apollo'
+import Header from "../components/Headers/Header.jsx";
+import { Query } from "react-apollo";
 import {
   getDashboardTotal,
   getDashboardSales,
-  getDashboardOrders
-} from '../apollo/server'
-import gql from 'graphql-tag'
+  getDashboardOrders,
+} from "../apollo/server";
+import gql from "graphql-tag";
 
 const GET_DASHBOARD_TOTAL = gql`
   ${getDashboardTotal}
-`
+`;
 const GET_DASHBOARD_SALES = gql`
   ${getDashboardSales}
-`
+`;
 const GET_DASHBOARD_ORDERS = gql`
   ${getDashboardOrders}
-`
+`;
 
 const dataLine = {
   datasets: {
-    label: 'Sales Amount',
+    label: "Sales Amount",
     fill: false,
     lineTension: 0.1,
-    backgroundColor: 'rgba(75,192,192,0.4)',
-    borderColor: 'rgba(75,192,192,1)',
-    borderCapStyle: 'butt',
+    backgroundColor: "rgba(75,192,192,0.4)",
+    borderColor: "rgba(75,192,192,1)",
+    borderCapStyle: "butt",
     borderDash: [],
     borderDashOffset: 0.0,
-    borderJoinStyle: 'miter',
-    pointBorderColor: 'rgba(75,192,192,1)',
-    pointBackgroundColor: '#fff',
+    borderJoinStyle: "miter",
+    pointBorderColor: "rgba(75,192,192,1)",
+    pointBackgroundColor: "#fff",
     pointBorderWidth: 1,
     pointHoverRadius: 5,
-    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-    pointHoverBorderColor: 'rgba(220,220,220,1)',
+    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+    pointHoverBorderColor: "rgba(220,220,220,1)",
     pointHoverBorderWidth: 2,
     pointRadius: 1,
-    pointHitRadius: 10
-  }
-}
+    pointHitRadius: 10,
+  },
+};
 const dataBar = {
   datasets: {
-    label: 'Order count',
-    backgroundColor: 'rgba(255,99,132,0.2)',
-    borderColor: 'rgba(255,99,132,1)',
+    label: "Order count",
+    backgroundColor: "rgba(255,99,132,0.2)",
+    borderColor: "rgba(255,99,132,1)",
     borderWidth: 1,
-    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-    hoverBorderColor: 'rgba(255,99,132,1)'
-  }
-}
+    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+    hoverBorderColor: "rgba(255,99,132,1)",
+  },
+};
 
 const intializeStartDate = () => {
-  var d = new Date()
-  d.setDate(d.getDate() - 7)
-  return d.toISOString().substr(0, 10)
-}
-const Dashboard = props => {
-  const [startingDate, setStartingDate] = useState(intializeStartDate)
+  var d = new Date();
+  d.setDate(d.getDate() - 7);
+  return d.toISOString().substr(0, 10);
+};
+const Dashboard = (props) => {
+  const [startingDate, setStartingDate] = useState(intializeStartDate);
   const [endingDate, setEndingDate] = useState(
     new Date().toISOString().substr(0, 10)
-  )
+  );
 
   return (
     <>
@@ -88,10 +88,11 @@ const Dashboard = props => {
           query={GET_DASHBOARD_TOTAL}
           variables={{
             startingDate: startingDate.toString(),
-            endingDate: endingDate.toString()
-          }}>
+            endingDate: endingDate.toString(),
+          }}
+        >
           {({ loading, error, data }) => {
-            if (error) return null
+            if (error) return null;
             return (
               <Row>
                 <Col className="mb-lg-5 mb-sm-3" xl="6">
@@ -104,7 +105,7 @@ const Dashboard = props => {
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
-                              ? '...'
+                              ? "..."
                               : data.getDashboardTotal.total_orders}
                           </span>
                         </div>
@@ -127,7 +128,7 @@ const Dashboard = props => {
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
-                              ? '...'
+                              ? "..."
                               : data.getDashboardTotal.total_users}
                           </span>
                         </div>
@@ -150,7 +151,7 @@ const Dashboard = props => {
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
-                              ? '...'
+                              ? "..."
                               : data.getDashboardTotal.total_sales}
                           </span>
                         </div>
@@ -173,11 +174,11 @@ const Dashboard = props => {
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
-                              ? '...'
+                              ? "..."
                               : data.getDashboardTotal.avg_ratings}
                             /
                             {loading
-                              ? '...'
+                              ? "..."
                               : data.getDashboardTotal.total_ratings}
                           </span>
                         </div>
@@ -191,7 +192,7 @@ const Dashboard = props => {
                   </Card>
                 </Col>
               </Row>
-            )
+            );
           }}
         </Query>
 
@@ -216,9 +217,9 @@ const Dashboard = props => {
                         className="form-control-alternative"
                         type="date"
                         max={new Date().toISOString().substr(0, 10)}
-                        onChange={event => {
-                          console.log(event.target.value)
-                          setStartingDate(event.target.value)
+                        onChange={(event) => {
+                          console.log(event.target.value);
+                          setStartingDate(event.target.value);
                         }}
                         value={startingDate}
                       />
@@ -231,8 +232,8 @@ const Dashboard = props => {
                         className="form-control-alternative"
                         type="date"
                         max={new Date().toISOString().substr(0, 10)}
-                        onChange={event => {
-                          setEndingDate(event.target.value)
+                        onChange={(event) => {
+                          setEndingDate(event.target.value);
                         }}
                         value={endingDate}
                       />
@@ -242,7 +243,8 @@ const Dashboard = props => {
                     <FormGroup>
                       <label
                         className="form-control-label"
-                        htmlFor="input-description">
+                        htmlFor="input-description"
+                      >
                         Filter Graph
                       </label>
                       <Button className="btn-block" color="primary">
@@ -260,10 +262,11 @@ const Dashboard = props => {
             query={GET_DASHBOARD_SALES}
             variables={{
               startingDate: startingDate.toString(),
-              endingDate: endingDate.toString()
-            }}>
+              endingDate: endingDate.toString(),
+            }}
+          >
             {({ loading, error, data }) => {
-              if (error) return null
+              if (error) return null;
               return (
                 <Col className="mb-5 mb-xl-0" xl="8">
                   <Card className="bg-gradient-default shadow">
@@ -284,34 +287,35 @@ const Dashboard = props => {
                           data={{
                             labels: loading
                               ? []
-                              : data.getDashboardSales.orders.map(d => d.day),
+                              : data.getDashboardSales.orders.map((d) => d.day),
                             datasets: [
                               {
                                 ...dataLine.datasets,
                                 data: loading
                                   ? []
                                   : data.getDashboardSales.orders.map(
-                                    d => d.amount
-                                  )
-                              }
-                            ]
+                                      (d) => d.amount
+                                    ),
+                              },
+                            ],
                           }}
                         />
                       </div>
                     </CardBody>
                   </Card>
                 </Col>
-              )
+              );
             }}
           </Query>
           <Query
             query={GET_DASHBOARD_ORDERS}
             variables={{
               startingDate: startingDate.toString(),
-              endingDate: endingDate.toString()
-            }}>
+              endingDate: endingDate.toString(),
+            }}
+          >
             {({ loading, error, data }) => {
-              if (error) return null
+              if (error) return null;
               return (
                 <Col xl="4">
                   <Card className="shadow">
@@ -332,35 +336,37 @@ const Dashboard = props => {
                           data={{
                             labels: loading
                               ? []
-                              : data.getDashboardOrders.orders.map(d => d.day),
+                              : data.getDashboardOrders.orders.map(
+                                  (d) => d.day
+                                ),
                             datasets: [
                               {
                                 ...dataBar.datasets,
                                 data: loading
                                   ? []
                                   : data.getDashboardOrders.orders.map(
-                                    d => d.count
-                                  )
-                              }
-                            ]
+                                      (d) => d.count
+                                    ),
+                              },
+                            ],
                           }}
                           width={100}
                           height={50}
                           options={{
-                            maintainAspectRatio: false
+                            maintainAspectRatio: false,
                           }}
                         />
                       </div>
                     </CardBody>
                   </Card>
                 </Col>
-              )
+              );
             }}
           </Query>
         </Row>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

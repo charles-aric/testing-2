@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 // reactstrap components
 import {
@@ -13,53 +13,53 @@ import {
   InputGroupText,
   InputGroup,
   Col,
-  UncontrolledAlert
-} from 'reactstrap'
+  UncontrolledAlert,
+} from "reactstrap";
 
-import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import { resetPassword } from '../apollo/server'
-import { validateFunc } from '../constraints/constraints'
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+import { resetPassword } from "../apollo/server";
+import { validateFunc } from "../constraints/constraints";
 
 const RESET_PASSWORD = gql`
   ${resetPassword}
-`
+`;
 
-const ResetPassword = props => {
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [confirmPasswordError, setConfirmPasswordError] = useState(null)
-  const [passwordError, setPasswordError] = useState(null)
-  const [error, setError] = useState(null)
-  const [success, setSuccess] = useState(null)
+const ResetPassword = (props) => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const onBlur = (event, field) => {
-    if (field === 'password') {
-      setPasswordError(!validateFunc({ password: password }, 'password'))
-    } else if (field === 'confirmPassword') {
+    if (field === "password") {
+      setPasswordError(!validateFunc({ password: password }, "password"));
+    } else if (field === "confirmPassword") {
       setConfirmPasswordError(
         !validateFunc(
           { confirmPassword: confirmPassword, password: password },
-          'confirmPassword'
+          "confirmPassword"
         )
-      )
+      );
     }
-  }
+  };
   const validate = () => {
     const ConfirmPasswordError = !validateFunc(
       { password: password, confirmPassword: confirmPassword },
-      'confirmPassword'
-    )
-    const PasswordError = !validateFunc({ password: password }, 'password')
-    setPasswordError(PasswordError)
-    setConfirmPasswordError(ConfirmPasswordError)
-    return ConfirmPasswordError && PasswordError
-  }
-  const onCompleted = data => {
-    setConfirmPasswordError(null)
-    setPasswordError(null)
-    setSuccess('Password has been updated')
-  }
+      "confirmPassword"
+    );
+    const PasswordError = !validateFunc({ password: password }, "password");
+    setPasswordError(PasswordError);
+    setConfirmPasswordError(ConfirmPasswordError);
+    return ConfirmPasswordError && PasswordError;
+  };
+  const onCompleted = (data) => {
+    setConfirmPasswordError(null);
+    setPasswordError(null);
+    setSuccess("Password has been updated");
+  };
   return (
     <>
       <Col lg="5" md="7">
@@ -74,11 +74,12 @@ const ResetPassword = props => {
               <FormGroup
                 className={
                   passwordError === null
-                    ? ''
+                    ? ""
                     : passwordError
-                      ? 'has-success'
-                      : 'has-danger'
-                }>
+                    ? "has-success"
+                    : "has-danger"
+                }
+              >
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -87,11 +88,11 @@ const ResetPassword = props => {
                   </InputGroupAddon>
                   <Input
                     value={password}
-                    onChange={event => {
-                      setPassword(event.target.value)
+                    onChange={(event) => {
+                      setPassword(event.target.value);
                     }}
-                    onBlur={event => {
-                      onBlur(event, 'password')
+                    onBlur={(event) => {
+                      onBlur(event, "password");
                     }}
                     placeholder="Password"
                     type="password"
@@ -101,11 +102,12 @@ const ResetPassword = props => {
               <FormGroup
                 className={
                   confirmPasswordError === null
-                    ? ''
+                    ? ""
                     : confirmPasswordError
-                      ? 'has-success'
-                      : 'has-danger'
-                }>
+                    ? "has-success"
+                    : "has-danger"
+                }
+              >
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -114,11 +116,11 @@ const ResetPassword = props => {
                   </InputGroupAddon>
                   <Input
                     value={confirmPassword}
-                    onChange={event => {
-                      setConfirmPassword(event.target.value)
+                    onChange={(event) => {
+                      setConfirmPassword(event.target.value);
                     }}
-                    onBlur={event => {
-                      onBlur(event, 'confirmPassword')
+                    onBlur={(event) => {
+                      onBlur(event, "confirmPassword");
                     }}
                     placeholder="Confirm Password"
                     type="password"
@@ -129,11 +131,12 @@ const ResetPassword = props => {
                 <Mutation
                   mutation={RESET_PASSWORD}
                   onCompleted={onCompleted}
-                  onError={error => {
-                    setConfirmPasswordError(null)
-                    setPasswordError(null)
-                    setError(error.networkError.result.errors[0].message)
-                  }}>
+                  onError={(error) => {
+                    setConfirmPasswordError(null);
+                    setPasswordError(null);
+                    setError(error.networkError.result.errors[0].message);
+                  }}
+                >
                   {(resetPassword, { loading, error }) => {
                     return (
                       <Button
@@ -141,25 +144,26 @@ const ResetPassword = props => {
                         color="primary"
                         type="button"
                         onClick={() => {
-                          setConfirmPasswordError(null)
-                          setPasswordError(null)
-                          setError(null)
-                          setSuccess(null)
+                          setConfirmPasswordError(null);
+                          setPasswordError(null);
+                          setError(null);
+                          setSuccess(null);
                           const params = new URLSearchParams(
                             props.location.search
-                          )
-                          if (validate() && params.get('reset')) {
+                          );
+                          if (validate() && params.get("reset")) {
                             resetPassword({
                               variables: {
                                 password: password,
-                                token: params.get('reset')
-                              }
-                            })
+                                token: params.get("reset"),
+                              },
+                            });
                           }
-                        }}>
+                        }}
+                      >
                         Reset
                       </Button>
-                    )
+                    );
                   }}
                 </Mutation>
               </div>
@@ -178,7 +182,7 @@ const ResetPassword = props => {
         </Card>
       </Col>
     </>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

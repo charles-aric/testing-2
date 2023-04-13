@@ -1,6 +1,6 @@
-import React from 'react'
-import { withTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { withTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 // reactstrap components
 import {
   UncontrolledCollapse,
@@ -12,15 +12,15 @@ import {
   Row,
   Col,
   FormGroup,
-  Input
-} from 'reactstrap'
+  Input,
+} from "reactstrap";
 
 function AdminNavbar(props) {
-  const handleChange = event => {
-    localStorage.setItem('enatega-language', event.target.value)
-    props.i18n.changeLanguage(event.target.value)
-  }
-  const { t } = props
+  const handleChange = (event) => {
+    localStorage.setItem("enatega-language", event.target.value);
+    props.i18n.changeLanguage(event.target.value);
+  };
+  const { t } = props;
   return (
     <>
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
@@ -43,7 +43,7 @@ function AdminNavbar(props) {
               <NavItem>
                 <NavLink className="nav-link-icon" to="/" tag={Link}>
                   <i className="ni ni-planet" />
-                  <span className="nav-link-inner--text">{t('Dashboard')}</span>
+                  <span className="nav-link-inner--text">{t("Dashboard")}</span>
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -51,10 +51,11 @@ function AdminNavbar(props) {
                   <Input
                     type="select"
                     name="select"
-                    defaultValue={localStorage.getItem('enatega-language')}
+                    defaultValue={localStorage.getItem("enatega-language")}
                     id="exampleSelect"
                     onChange={handleChange}
-                    onBlur={event => {}}>
+                    onBlur={(event) => {}}
+                  >
                     <option value="en">English</option>
                     <option value="de">Deutsche</option>
                     <option value="zh">中文</option>
@@ -68,6 +69,6 @@ function AdminNavbar(props) {
         </Container>
       </Navbar>
     </>
-  )
+  );
 }
-export default withTranslation()(AdminNavbar)
+export default withTranslation()(AdminNavbar);

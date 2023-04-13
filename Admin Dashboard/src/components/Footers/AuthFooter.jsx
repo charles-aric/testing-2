@@ -1,12 +1,12 @@
 /*eslint-disable*/
-import React from 'react'
-import { withTranslation } from 'react-i18next'
-import { server_url } from '../../config/config'
+import React from "react";
+import { withTranslation } from "react-i18next";
+import { server_url } from "../../config/config";
 // reactstrap components
-import { NavItem, NavLink, Nav, Container, Row, Col } from 'reactstrap'
+import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
 
 function AuthFooter(props) {
-  const { t } = props
+  const { t } = props;
   return (
     <>
       <footer className="py-5">
@@ -14,7 +14,7 @@ function AuthFooter(props) {
           <Row className="align-items-center justify-content-xl-between">
             <Col xl="6">
               <div className="copyright text-center text-xl-left text-muted">
-                © {t('2019-20')}{' '}
+                © {t("2019-20")}{" "}
                 <a className="font-weight-bold ml-1" href={server_url}>
                   Enatega
                 </a>
@@ -28,15 +28,17 @@ function AuthFooter(props) {
                 <NavItem>
                   <NavLink
                     href="https://ninjascode.com/pages/ourteam.html"
-                    target="_blank">
-                    {t('About Us')}
+                    target="_blank"
+                  >
+                    {t("About Us")}
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink
                     href="https://medium.com/@sharangohar"
-                    target="_blank">
-                    {t('Blog')}
+                    target="_blank"
+                  >
+                    {t("Blog")}
                   </NavLink>
                 </NavItem>
               </Nav>
@@ -45,7 +47,7 @@ function AuthFooter(props) {
         </Container>
       </footer>
     </>
-  )
+  );
 }
 
-export default withTranslation()(AuthFooter)
+export default withTranslation()(AuthFooter);

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { withTranslation } from 'react-i18next'
+import React, { useState } from "react";
+import { withTranslation } from "react-i18next";
 import {
   Row,
   Col,
@@ -8,45 +8,45 @@ import {
   FormGroup,
   Form,
   Input,
-  Button
-} from 'reactstrap'
-import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import { validateFunc } from '../../../constraints/constraints'
-import { saveDeliveryConfiguration } from '../../../apollo/server'
-import Loader from 'react-loader-spinner'
+  Button,
+} from "reactstrap";
+import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
+import { validateFunc } from "../../../constraints/constraints";
+import { saveDeliveryConfiguration } from "../../../apollo/server";
+import Loader from "react-loader-spinner";
 
 const SAVE_DELIVERY_CONFIGURATION = gql`
   ${saveDeliveryConfiguration}
-`
+`;
 
 function Delivery(props) {
   const [deliveryCharges, deliveryChargesSetter] = useState(
     props.deliveryCharges || 0
-  )
-  const [deliveryChargesError, deliveryChargesErrorSetter] = useState(null)
+  );
+  const [deliveryChargesError, deliveryChargesErrorSetter] = useState(null);
 
   const onBlur = (setter, field, event) => {
-    setter(!validateFunc({ [field]: event.target.value.trim() }, field))
-  }
+    setter(!validateFunc({ [field]: event.target.value.trim() }, field));
+  };
   const validateInput = () => {
-    const deliveryChargesError = !isNaN(deliveryCharges)
-    deliveryChargesErrorSetter(deliveryChargesError)
-    return deliveryChargesError
-  }
-  const onCompleted = data => {
-    console.log(data)
-  }
-  const onError = error => {
-    console.log(error)
-  }
-  const { t } = props
+    const deliveryChargesError = !isNaN(deliveryCharges);
+    deliveryChargesErrorSetter(deliveryChargesError);
+    return deliveryChargesError;
+  };
+  const onCompleted = (data) => {
+    console.log(data);
+  };
+  const onError = (error) => {
+    console.log(error);
+  };
+  const { t } = props;
   return (
     <Row className="mt-3">
       <div className="col">
         <Card className="shadow">
           <CardHeader className="border-0">
-            <h3 className="mb-0">{t('Delivery Charges')}</h3>
+            <h3 className="mb-0">{t("Delivery Charges")}</h3>
           </CardHeader>
           <Form>
             <div className="pl-lg-4">
@@ -54,33 +54,36 @@ function Delivery(props) {
                 <Col md="8">
                   <label
                     className="form-control-label"
-                    htmlFor="input-deliverycharges">
-                    {t('Price')}
+                    htmlFor="input-deliverycharges"
+                  >
+                    {t("Price")}
                   </label>
                   <FormGroup
                     className={
                       deliveryChargesError === null
-                        ? ''
+                        ? ""
                         : deliveryChargesError
-                          ? 'has-success'
-                          : 'has-danger'
-                    }>
+                        ? "has-success"
+                        : "has-danger"
+                    }
+                  >
                     <Input
                       className="form-control-alternative"
                       id="input-deliverycharges"
                       placeholder="e.g 30.00"
                       type="number"
                       defaultValue={deliveryCharges}
-                      onChange={event => {
-                        deliveryChargesSetter(event.target.value)
+                      onChange={(event) => {
+                        deliveryChargesSetter(event.target.value);
                       }}
-                      onBlur={event => {
+                      onBlur={(event) => {
                         onBlur(
                           deliveryChargesErrorSetter,
-                          'deliveryCharges',
+                          "deliveryCharges",
                           event
-                        )
-                      }}></Input>
+                        );
+                      }}
+                    ></Input>
                   </FormGroup>
                 </Col>
               </Row>
@@ -89,14 +92,16 @@ function Delivery(props) {
                   <Mutation
                     mutation={SAVE_DELIVERY_CONFIGURATION}
                     onCompleted={onCompleted}
-                    onError={onError}>
+                    onError={onError}
+                  >
                     {(saveConfiguration, { loading, error }) => {
                       if (loading) {
                         return (
                           <Button
                             className="btn-block mb-2"
                             color="primary"
-                            onClick={() => null}>
+                            onClick={() => null}
+                          >
                             <Loader
                               type="TailSpin"
                               color="#FFF"
@@ -105,30 +110,31 @@ function Delivery(props) {
                               visible={loading}
                             />
                           </Button>
-                        )
+                        );
                       }
-                      if (error) return t('Error')
+                      if (error) return t("Error");
                       return (
                         <Button
                           className="btn-block mb-2"
                           type="button"
                           color="primary"
-                          onClick={e => {
-                            e.preventDefault()
+                          onClick={(e) => {
+                            e.preventDefault();
                             if (validateInput()) {
                               saveConfiguration({
                                 variables: {
                                   configurationInput: {
-                                    delivery_charges: Number(deliveryCharges)
-                                  }
-                                }
-                              })
+                                    delivery_charges: Number(deliveryCharges),
+                                  },
+                                },
+                              });
                             }
                           }}
-                          size="lg">
-                          {t('Save')}
+                          size="lg"
+                        >
+                          {t("Save")}
                         </Button>
-                      )
+                      );
                     }}
                   </Mutation>
                 </Col>
@@ -138,7 +144,7 @@ function Delivery(props) {
         </Card>
       </div>
     </Row>
-  )
+  );
 }
 
-export default withTranslation()(Delivery)
+export default withTranslation()(Delivery);

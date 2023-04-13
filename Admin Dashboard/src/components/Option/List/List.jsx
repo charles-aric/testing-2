@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -10,23 +10,23 @@ import {
   Input,
   Button,
   Label,
-  Modal
-} from 'reactstrap'
-import { withTranslation } from 'react-i18next'
-import { Query, compose, withApollo } from 'react-apollo'
-import gql from 'graphql-tag'
-import OptionsComponent from '../Option'
-import { getOptions } from '../../../apollo/server'
+  Modal,
+} from "reactstrap";
+import { withTranslation } from "react-i18next";
+import { Query, compose, withApollo } from "react-apollo";
+import gql from "graphql-tag";
+import OptionsComponent from "../Option";
+import { getOptions } from "../../../apollo/server";
 
 const GET_OPTIONS = gql`
   ${getOptions}
-`
+`;
 
 function List(props) {
-  const [optionsModal, optionsModalSetter] = useState(false)
+  const [optionsModal, optionsModalSetter] = useState(false);
   const toggleModal = () => {
-    optionsModalSetter(prev => !prev)
-  }
+    optionsModalSetter((prev) => !prev);
+  };
   return (
     <Card>
       <CardHeader>Select</CardHeader>
@@ -43,8 +43,8 @@ function List(props) {
           </Row>
           <Query query={GET_OPTIONS}>
             {({ loading, error, data }) => {
-              if (loading) return 'Loading ...'
-              if (error) return 'Error ...'
+              if (loading) return "Loading ...";
+              if (error) return "Error ...";
               return data.options.map((option, index) => (
                 <FormGroup key={index} check>
                   <Label check>
@@ -52,7 +52,7 @@ function List(props) {
                     {`${option.title} (Description: ${option.description})(Price: ${option.price})`}
                   </Label>
                 </FormGroup>
-              ))
+              ));
             }}
           </Query>
 
@@ -72,12 +72,13 @@ function List(props) {
         size="lg"
         isOpen={optionsModal}
         toggle={() => {
-          toggleModal()
-        }}>
+          toggleModal();
+        }}
+      >
         <OptionsComponent />
       </Modal>
     </Card>
-  )
+  );
 }
 
-export default compose(withApollo, withTranslation())(List)
+export default compose(withApollo, withTranslation())(List);

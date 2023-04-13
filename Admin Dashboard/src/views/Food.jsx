@@ -1,117 +1,119 @@
 /* eslint-disable react/display-name */
-import React, { useState } from 'react'
-import gql from 'graphql-tag'
-import { Query, Mutation, compose, withApollo } from 'react-apollo'
-import { withTranslation } from 'react-i18next'
+import React, { useState } from "react";
+import gql from "graphql-tag";
+import { Query, Mutation, compose, withApollo } from "react-apollo";
+import { withTranslation } from "react-i18next";
 // reactstrap components
-import { Badge, Card, Container, Row, Media, Modal } from 'reactstrap'
+import { Badge, Card, Container, Row, Media, Modal } from "reactstrap";
 // core components
-import Header from '../components/Headers/Header.jsx'
-import { getFoods, deleteFood } from '../apollo/server'
-import FoodComponent from '../components/Food/Food'
-import CustomLoader from '../components/Loader/CustomLoader'
-import DataTable from 'react-data-table-component'
-import orderBy from 'lodash/orderBy'
-import { transformToNewline } from '../utils/stringManipulations'
-import Loader from 'react-loader-spinner'
-import Alert from '../components/Alert'
+import Header from "../components/Headers/Header.jsx";
+import { getFoods, deleteFood } from "../apollo/server";
+import FoodComponent from "../components/Food/Food";
+import CustomLoader from "../components/Loader/CustomLoader";
+import DataTable from "react-data-table-component";
+import orderBy from "lodash/orderBy";
+import { transformToNewline } from "../utils/stringManipulations";
+import Loader from "react-loader-spinner";
+import Alert from "../components/Alert";
 
 const GET_FOODS = gql`
   ${getFoods}
-`
+`;
 const DELETE_FOOD = gql`
   ${deleteFood}
-`
+`;
 
-const Food = props => {
-  const [editModal, setEditModal] = useState(false)
-  const [food, setFood] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
+const Food = (props) => {
+  const [editModal, setEditModal] = useState(false);
+  const [food, setFood] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = food => {
-    setEditModal(!editModal)
-    setFood(food)
-  }
+  const toggleModal = (food) => {
+    setEditModal(!editModal);
+    setFood(food);
+  };
 
   const propExists = (obj, path) => {
-    return path.split('.').reduce((obj, prop) => {
-      return obj && obj[prop] ? obj[prop] : ''
-    }, obj)
-  }
+    return path.split(".").reduce((obj, prop) => {
+      return obj && obj[prop] ? obj[prop] : "";
+    }, obj);
+  };
 
   const customSort = (rows, field, direction) => {
-    const handleField = row => {
+    const handleField = (row) => {
       if (field && isNaN(propExists(row, field))) {
-        return propExists(row, field).toLowerCase()
+        return propExists(row, field).toLowerCase();
       }
 
-      return row[field]
-    }
+      return row[field];
+    };
 
-    return orderBy(rows, handleField, direction)
-  }
+    return orderBy(rows, handleField, direction);
+  };
 
   const handleSort = (column, sortDirection) =>
-    console.log(column.selector, sortDirection)
+    console.log(column.selector, sortDirection);
 
   const columns = [
     {
-      name: 'Title',
-      selector: 'title',
+      name: "Title",
+      selector: "title",
       sortable: true,
-      cell: row => (
+      cell: (row) => (
         <>
           <Media>
             <span className="mb-0 text-sm">{row.title}</span>
           </Media>
         </>
-      )
+      ),
     },
     {
-      name: 'Description',
+      name: "Description",
       sortable: true,
-      selector: 'description',
-      cell: row => <>{transformToNewline(row.description, 3)}</>
+      selector: "description",
+      cell: (row) => <>{transformToNewline(row.description, 3)}</>,
     },
     {
-      name: 'Category',
+      name: "Category",
       sortable: true,
-      selector: 'category.title',
-      cell: row => <>{row.category.title}</>
+      selector: "category.title",
+      cell: (row) => <>{row.category.title}</>,
     },
     {
-      name: 'Image',
-      cell: row => (
+      name: "Image",
+      cell: (row) => (
         <>
           {!!row.img_url && (
             <img className="img-responsive" src={row.img_url} alt="img menu" />
           )}
-          {!row.img_url && 'No Image'}
+          {!row.img_url && "No Image"}
         </>
-      )
+      ),
     },
     {
-      name: 'Action',
-      cell: row => <>{actionButtons(row)}</>
-    }
-  ]
+      name: "Action",
+      cell: (row) => <>{actionButtons(row)}</>,
+    },
+  ];
 
-  const actionButtons = row => {
+  const actionButtons = (row) => {
     return (
       <>
         <Badge
           href="#pablo"
-          onClick={e => {
-            e.preventDefault()
-            toggleModal(row)
+          onClick={(e) => {
+            e.preventDefault();
+            toggleModal(row);
           }}
-          color="primary">
+          color="primary"
+        >
           Edit
         </Badge>
         &nbsp;&nbsp;
         <Mutation
           mutation={DELETE_FOOD}
-          refetchQueries={[{ query: GET_FOODS, variables: { page: 0 } }]}>
+          refetchQueries={[{ query: GET_FOODS, variables: { page: 0 } }]}
+        >
           {(deleteFood, { loading: deleteLoading }) => {
             if (deleteLoading) {
               return (
@@ -122,30 +124,31 @@ const Food = props => {
                   width={40}
                   visible={deleteLoading}
                 />
-              )
+              );
             }
             return (
               <Badge
                 href="#pablo"
                 color="danger"
-                onClick={e => {
-                  e.preventDefault()
+                onClick={(e) => {
+                  e.preventDefault();
                   // deleteFood({ variables: { id: row._id } })
-                  setIsOpen(true)
+                  setIsOpen(true);
                   setTimeout(() => {
-                    setIsOpen(false)
-                  }, 2000)
-                }}>
-                {'Delete'}
+                    setIsOpen(false);
+                  }, 2000);
+                }}
+              >
+                {"Delete"}
               </Badge>
-            )
+            );
           }}
         </Mutation>
       </>
-    )
-  }
+    );
+  };
 
-  const { t } = props
+  const { t } = props;
   return (
     <>
       <Header />
@@ -167,13 +170,13 @@ const Food = props => {
                   if (error) {
                     return (
                       <span>
-                        `${t('Error')}! ${error.message}`
+                        `${t("Error")}! ${error.message}`
                       </span>
-                    )
+                    );
                   }
                   return (
                     <DataTable
-                      title={t('Foods')}
+                      title={t("Foods")}
                       columns={columns}
                       data={data.foods}
                       pagination
@@ -183,7 +186,7 @@ const Food = props => {
                       sortFunction={customSort}
                       defaultSortField="title"
                     />
-                  )
+                  );
                 }}
               </Query>
             </Card>
@@ -194,13 +197,14 @@ const Food = props => {
           size="lg"
           isOpen={editModal}
           toggle={() => {
-            toggleModal()
-          }}>
+            toggleModal();
+          }}
+        >
           <FoodComponent food={food} />
         </Modal>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default compose(withApollo, withTranslation())(Food)
+export default compose(withApollo, withTranslation())(Food);

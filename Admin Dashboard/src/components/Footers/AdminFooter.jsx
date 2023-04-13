@@ -1,22 +1,23 @@
 /*eslint-disable*/
-import React from 'react'
-import { withTranslation } from 'react-i18next'
+import React from "react";
+import { withTranslation } from "react-i18next";
 // reactstrap components
-import { Row, Col, Nav, NavItem, NavLink } from 'reactstrap'
+import { Row, Col, Nav, NavItem, NavLink } from "reactstrap";
 
 function Footer(props) {
-  const { t } = props
+  const { t } = props;
   return (
     <footer className="footer">
       <Row className="align-items-center justify-content-xl-between">
         <Col xl="6">
           <div className="copyright text-center text-xl-left text-muted">
-            © {t('2019-20')}{' '}
+            © {t("2019-20")}{" "}
             <a
               className="font-weight-bold ml-1"
               href="https://enatega.com/"
               rel="noopener noreferrer"
-              target="_blank">
+              target="_blank"
+            >
               Enatega
             </a>
           </div>
@@ -28,7 +29,8 @@ function Footer(props) {
               <NavLink
                 href="https://enatega.com/"
                 rel="noopener noreferrer"
-                target="_blank">
+                target="_blank"
+              >
                 Enatega
               </NavLink>
             </NavItem>
@@ -37,8 +39,9 @@ function Footer(props) {
               <NavLink
                 href="https://ninjascode.com/pages/ourteam.html"
                 rel="noopener noreferrer"
-                target="_blank">
-                {t('About Us')}
+                target="_blank"
+              >
+                {t("About Us")}
               </NavLink>
             </NavItem>
 
@@ -46,15 +49,16 @@ function Footer(props) {
               <NavLink
                 href="https://medium.com/@sharangohar"
                 rel="noopener noreferrer"
-                target="_blank">
-                {t('Blog')}
+                target="_blank"
+              >
+                {t("Blog")}
               </NavLink>
             </NavItem>
           </Nav>
         </Col>
       </Row>
     </footer>
-  )
+  );
 }
 
-export default withTranslation()(Footer)
+export default withTranslation()(Footer);

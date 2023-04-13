@@ -1,98 +1,100 @@
 /* eslint-disable react/display-name */
-import React, { useState } from 'react'
-import gql from 'graphql-tag'
-import { Query, Mutation, compose, withApollo } from 'react-apollo'
-import { withTranslation } from 'react-i18next'
-import CategoryComponent from '../components/Category/Category'
-import CustomLoader from '../components/Loader/CustomLoader'
+import React, { useState } from "react";
+import gql from "graphql-tag";
+import { Query, Mutation, compose, withApollo } from "react-apollo";
+import { withTranslation } from "react-i18next";
+import CategoryComponent from "../components/Category/Category";
+import CustomLoader from "../components/Loader/CustomLoader";
 // reactstrap components
-import { Badge, Card, Container, Row, Modal } from 'reactstrap'
+import { Badge, Card, Container, Row, Modal } from "reactstrap";
 // core components
-import Header from '../components/Headers/Header.jsx'
-import { categories, deleteCategory, getFoods } from '../apollo/server'
-import DataTable from 'react-data-table-component'
-import orderBy from 'lodash/orderBy'
-import Loader from 'react-loader-spinner'
-import Alert from '../components/Alert'
+import Header from "../components/Headers/Header.jsx";
+import { categories, deleteCategory, getFoods } from "../apollo/server";
+import DataTable from "react-data-table-component";
+import orderBy from "lodash/orderBy";
+import Loader from "react-loader-spinner";
+import Alert from "../components/Alert";
 
 const GET_CATEGORIES = gql`
   ${categories}
-`
+`;
 const DELETE_CATEGORY = gql`
   ${deleteCategory}
-`
+`;
 const GET_FOODS = gql`
   ${getFoods}
-`
+`;
 
-const Category = props => {
-  const [editModal, setEditModal] = useState(false)
-  const [category, setCategory] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
+const Category = (props) => {
+  const [editModal, setEditModal] = useState(false);
+  const [category, setCategory] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = category => {
-    setEditModal(!editModal)
-    setCategory(category)
-  }
+  const toggleModal = (category) => {
+    setEditModal(!editModal);
+    setCategory(category);
+  };
 
   const customSort = (rows, field, direction) => {
-    const handleField = row => {
+    const handleField = (row) => {
       if (row[field]) {
-        return row[field].toLowerCase()
+        return row[field].toLowerCase();
       }
 
-      return row[field]
-    }
+      return row[field];
+    };
 
-    return orderBy(rows, handleField, direction)
-  }
+    return orderBy(rows, handleField, direction);
+  };
 
   const handleSort = (column, sortDirection) =>
-    console.log(column.selector, sortDirection)
+    console.log(column.selector, sortDirection);
 
   const columns = [
     {
-      name: 'Title',
+      name: "Title",
       sortable: true,
-      selector: 'title'
+      selector: "title",
     },
     {
-      name: 'Description',
+      name: "Description",
       sortable: true,
-      selector: 'description'
+      selector: "description",
     },
     {
-      name: 'Image',
-      cell: row => (
+      name: "Image",
+      cell: (row) => (
         <>
           {!!row.img_menu && (
             <img className="img-responsive" src={row.img_menu} alt="img menu" />
           )}
-          {!row.img_menu && 'No Image'}
+          {!row.img_menu && "No Image"}
         </>
-      )
+      ),
     },
     {
-      name: 'Action',
-      cell: row => <>{actionButtons(row)}</>
-    }
-  ]
-  const actionButtons = row => {
+      name: "Action",
+      cell: (row) => <>{actionButtons(row)}</>,
+    },
+  ];
+  const actionButtons = (row) => {
     return (
       <>
         <Badge
           href="#pablo"
-          onClick={e => {
-            e.preventDefault()
-            toggleModal(row)
+          onClick={(e) => {
+            e.preventDefault();
+            toggleModal(row);
           }}
-          color="primary">
+          color="primary"
+        >
           Edit
         </Badge>
         &nbsp;&nbsp;
         <Mutation
           mutation={DELETE_CATEGORY}
-          refetchQueries={[{ query: GET_CATEGORIES }, { query: GET_FOODS }]}>
+          refetchQueries={[{ query: GET_CATEGORIES }, { query: GET_FOODS }]}
+        >
           {(deleteCategory, { loading: deleteLoading }) => {
             if (deleteLoading) {
               return (
@@ -103,29 +105,30 @@ const Category = props => {
                   width={40}
                   visible={deleteLoading}
                 />
-              )
+              );
             }
             return (
               <Badge
                 href="#pablo"
                 color="danger"
-                onClick={e => {
-                  e.preventDefault()
+                onClick={(e) => {
+                  e.preventDefault();
                   // deleteCategory({ variables: { id: row._id } })
-                  setIsOpen(true)
+                  setIsOpen(true);
                   setTimeout(() => {
-                    setIsOpen(false)
-                  }, 2000)
-                }}>
-                {'Delete'}
+                    setIsOpen(false);
+                  }, 2000);
+                }}
+              >
+                {"Delete"}
               </Badge>
-            )
+            );
           }}
         </Mutation>
       </>
-    )
-  }
-  const { t } = props
+    );
+  };
+  const { t } = props;
   return (
     <>
       <Header />
@@ -147,13 +150,13 @@ const Category = props => {
                   if (error) {
                     return (
                       <span>
-                        `${t('Error')}! ${error.message}`
+                        `${t("Error")}! ${error.message}`
                       </span>
-                    )
+                    );
                   }
                   return (
                     <DataTable
-                      title={t('Categories')}
+                      title={t("Categories")}
                       columns={columns}
                       data={data.categories}
                       pagination
@@ -163,7 +166,7 @@ const Category = props => {
                       sortFunction={customSort}
                       defaultSortField="title"
                     />
-                  )
+                  );
                 }}
               </Query>
             </Card>
@@ -174,12 +177,13 @@ const Category = props => {
           size="lg"
           isOpen={editModal}
           toggle={() => {
-            toggleModal(null)
-          }}>
+            toggleModal(null);
+          }}
+        >
           <CategoryComponent category={category} />
         </Modal>
       </Container>
     </>
-  )
-}
-export default compose(withApollo, withTranslation())(Category)
+  );
+};
+export default compose(withApollo, withTranslation())(Category);

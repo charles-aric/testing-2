@@ -1,87 +1,88 @@
 /* eslint-disable react/display-name */
-import React, { useState } from 'react'
-import { Container, Badge, Row, Card, Modal } from 'reactstrap'
-import Header from '../components/Headers/Header.jsx'
-import AddonComponent from '../components/Addon/Addon'
-import { addons, deleteAddon } from '../apollo/server'
-import CustomLoader from '../components/Loader/CustomLoader'
-import DataTable from 'react-data-table-component'
-import orderBy from 'lodash/orderBy'
-import { withTranslation } from 'react-i18next'
-import gql from 'graphql-tag'
-import { Query, Mutation, compose, withApollo } from 'react-apollo'
-import Loader from 'react-loader-spinner'
-import Alert from '../components/Alert'
+import React, { useState } from "react";
+import { Container, Badge, Row, Card, Modal } from "reactstrap";
+import Header from "../components/Headers/Header.jsx";
+import AddonComponent from "../components/Addon/Addon";
+import { addons, deleteAddon } from "../apollo/server";
+import CustomLoader from "../components/Loader/CustomLoader";
+import DataTable from "react-data-table-component";
+import orderBy from "lodash/orderBy";
+import { withTranslation } from "react-i18next";
+import gql from "graphql-tag";
+import { Query, Mutation, compose, withApollo } from "react-apollo";
+import Loader from "react-loader-spinner";
+import Alert from "../components/Alert";
 
 const GET_ADDONS = gql`
   ${addons}
-`
+`;
 const DELETE_ADDON = gql`
   ${deleteAddon}
-`
+`;
 
-const Addon = props => {
-  const [addon, setAddon] = useState(null)
-  const [editModal, setEditModal] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+const Addon = (props) => {
+  const [addon, setAddon] = useState(null);
+  const [editModal, setEditModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = addon => {
-    setEditModal(!editModal)
-    setAddon(addon)
-  }
+  const toggleModal = (addon) => {
+    setEditModal(!editModal);
+    setAddon(addon);
+  };
 
   const customSort = (rows, field, direction) => {
-    const handleField = row => {
+    const handleField = (row) => {
       if (row[field] && isNaN(row[field])) {
-        return row[field].toLowerCase()
+        return row[field].toLowerCase();
       }
 
-      return row[field]
-    }
+      return row[field];
+    };
 
-    return orderBy(rows, handleField, direction)
-  }
+    return orderBy(rows, handleField, direction);
+  };
 
   const handleSort = (column, sortDirection) =>
-    console.log(column.selector, sortDirection)
+    console.log(column.selector, sortDirection);
 
   const columns = [
     {
-      name: 'Title',
+      name: "Title",
       sortable: true,
-      selector: 'title'
+      selector: "title",
     },
     {
-      name: 'Description',
+      name: "Description",
       sortable: true,
-      selector: 'description'
+      selector: "description",
     },
     {
-      name: 'Minimum',
+      name: "Minimum",
       sortable: true,
-      selector: 'quantity_minimum'
+      selector: "quantity_minimum",
     },
     {
-      name: 'Maximum',
+      name: "Maximum",
       sortable: true,
-      selector: 'quantity_maximum'
+      selector: "quantity_maximum",
     },
     {
-      name: 'Action',
-      cell: row => <>{actionButtons(row)}</>
-    }
-  ]
+      name: "Action",
+      cell: (row) => <>{actionButtons(row)}</>,
+    },
+  ];
 
-  const actionButtons = row => {
+  const actionButtons = (row) => {
     return (
       <>
         <Badge
           href="#pablo"
-          onClick={e => {
-            e.preventDefault()
-            toggleModal(row)
+          onClick={(e) => {
+            e.preventDefault();
+            toggleModal(row);
           }}
-          color="primary">
+          color="primary"
+        >
           Edit
         </Badge>
         &nbsp;&nbsp;
@@ -96,44 +97,45 @@ const Addon = props => {
                   width={40}
                   visible={deleteLoading}
                 />
-              )
+              );
             }
             return (
               <>
                 <Badge
                   href="#pablo"
                   color="danger"
-                  onClick={e => {
-                    e.preventDefault()
+                  onClick={(e) => {
+                    e.preventDefault();
                     // deleteAddon({ variables: { id: row._id } })
-                    setIsOpen(true)
+                    setIsOpen(true);
                     setTimeout(() => {
-                      setIsOpen(false)
-                    }, 2000)
-                  }}>
-                  {'Delete'}
+                      setIsOpen(false);
+                    }, 2000);
+                  }}
+                >
+                  {"Delete"}
                 </Badge>
               </>
-            )
+            );
           }}
         </Mutation>
       </>
-    )
-  }
+    );
+  };
 
   const update = (proxy, { data: { deleteAddon } }) => {
     try {
       if (deleteAddon) {
-        const data = proxy.readQuery({ query: GET_ADDONS })
-        data.addons = data.addons.filter(addon => addon._id !== deleteAddon)
-        proxy.writeQuery({ query: GET_ADDONS, data })
+        const data = proxy.readQuery({ query: GET_ADDONS });
+        data.addons = data.addons.filter((addon) => addon._id !== deleteAddon);
+        proxy.writeQuery({ query: GET_ADDONS, data });
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
-  const { t } = props
+  const { t } = props;
   return (
     <>
       <Header />
@@ -155,14 +157,14 @@ const Addon = props => {
                     return (
                       <tr>
                         <td>
-                          `${t('Error')}! ${error.message}`
+                          `${t("Error")}! ${error.message}`
                         </td>
                       </tr>
-                    )
+                    );
                   }
                   return (
                     <DataTable
-                      title={t('Addons')}
+                      title={t("Addons")}
                       columns={columns}
                       data={data.allAddons}
                       pagination
@@ -172,7 +174,7 @@ const Addon = props => {
                       sortFunction={customSort}
                       defaultSortField="title"
                     />
-                  )
+                  );
                 }}
               </Query>
             </Card>
@@ -183,13 +185,14 @@ const Addon = props => {
           size="lg"
           isOpen={editModal}
           toggle={() => {
-            toggleModal()
-          }}>
+            toggleModal();
+          }}
+        >
           <AddonComponent addon={addon} />
         </Modal>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default compose(withApollo, withTranslation())(Addon)
+export default compose(withApollo, withTranslation())(Addon);

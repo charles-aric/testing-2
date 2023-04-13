@@ -1,77 +1,77 @@
 /* eslint-disable react/display-name */
-import React from 'react'
-import { withTranslation } from 'react-i18next'
-import { Container, Row, Card } from 'reactstrap'
-import Header from '../components/Headers/Header.jsx'
-import DataTable from 'react-data-table-component'
-import orderBy from 'lodash/orderBy'
-import CustomLoader from '../components/Loader/CustomLoader'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
-import { reviews } from '../apollo/server'
+import React from "react";
+import { withTranslation } from "react-i18next";
+import { Container, Row, Card } from "reactstrap";
+import Header from "../components/Headers/Header.jsx";
+import DataTable from "react-data-table-component";
+import orderBy from "lodash/orderBy";
+import CustomLoader from "../components/Loader/CustomLoader";
+import { Query } from "react-apollo";
+import gql from "graphql-tag";
+import { reviews } from "../apollo/server";
 
 const REVIEWS = gql`
   ${reviews}
-`
+`;
 
-const Ratings = props => {
+const Ratings = (props) => {
   const columns = [
     {
-      name: 'Name',
+      name: "Name",
       sortable: true,
-      selector: 'order.user.name',
-      cell: row => <>{row.order.user.name}</>
+      selector: "order.user.name",
+      cell: (row) => <>{row.order.user.name}</>,
     },
     {
-      name: 'Email',
+      name: "Email",
       sortable: true,
-      selector: 'order.user.email',
-      cell: row => <>{row.order.user.email}</>
+      selector: "order.user.email",
+      cell: (row) => <>{row.order.user.email}</>,
     },
     {
-      name: 'Items',
-      cell: row => (
+      name: "Items",
+      cell: (row) => (
         <>
           {row.order.items.map(({ food }) => {
-            return food.title + '\t'
+            return food.title + "\t";
           })}
         </>
-      )
+      ),
     },
     {
-      name: 'Review',
+      name: "Review",
       sortable: true,
-      selector: 'description',
-      cell: row => <>{row.description}</>
+      selector: "description",
+      cell: (row) => <>{row.description}</>,
     },
     {
-      name: 'Ratings',
+      name: "Ratings",
       sortable: true,
-      selector: 'rating',
-      cell: row => <>{row.rating}</>
-    }
-  ]
+      selector: "rating",
+      cell: (row) => <>{row.rating}</>,
+    },
+  ];
   const propExists = (obj, path) => {
-    return path.split('.').reduce((obj, prop) => {
-      return obj && obj[prop] ? obj[prop] : ''
-    }, obj)
-  }
+    return path.split(".").reduce((obj, prop) => {
+      return obj && obj[prop] ? obj[prop] : "";
+    }, obj);
+  };
 
   const customSort = (rows, field, direction) => {
-    const handleField = row => {
+    const handleField = (row) => {
       if (field && isNaN(propExists(row, field))) {
-        return propExists(row, field).toLowerCase()
+        return propExists(row, field).toLowerCase();
       }
 
-      return row[field]
-    }
+      return row[field];
+    };
 
-    return orderBy(rows, handleField, direction)
-  }
+    return orderBy(rows, handleField, direction);
+  };
 
   const handleSort = (column, sortDirection) =>
-    console.log(column.selector, sortDirection, column)
-  const { t } = props
+    console.log(column.selector, sortDirection, column);
+  const { t } = props;
   return (
     <>
       <Header />
@@ -83,22 +83,23 @@ const Ratings = props => {
             <Card className="shadow">
               <Query
                 query={REVIEWS}
-                onError={error => {
-                  console.log(error)
-                }}>
+                onError={(error) => {
+                  console.log(error);
+                }}
+              >
                 {({ loading, error, data }) => {
                   if (error) {
                     return (
                       <tr>
                         <td>
-                          `${t('Error')}! ${error.message}`
+                          `${t("Error")}! ${error.message}`
                         </td>
                       </tr>
-                    )
+                    );
                   }
                   return (
                     <DataTable
-                      title={t('Ratings')}
+                      title={t("Ratings")}
                       columns={columns}
                       data={data.allReviews}
                       pagination
@@ -108,7 +109,7 @@ const Ratings = props => {
                       sortFunction={customSort}
                       defaultSortField="order.user.name"
                     />
-                  )
+                  );
                 }}
               </Query>
             </Card>
@@ -116,7 +117,7 @@ const Ratings = props => {
         </Row>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default withTranslation()(Ratings)
+export default withTranslation()(Ratings);

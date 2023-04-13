@@ -1,89 +1,91 @@
 /* eslint-disable react/display-name */
-import React, { useState } from 'react'
-import { Badge, Container, Row, Card, Modal } from 'reactstrap'
-import Header from '../components/Headers/Header.jsx'
-import OptionComponent from '../components/Option/Option'
-import CustomLoader from '../components/Loader/CustomLoader'
-import DataTable from 'react-data-table-component'
-import orderBy from 'lodash/orderBy'
+import React, { useState } from "react";
+import { Badge, Container, Row, Card, Modal } from "reactstrap";
+import Header from "../components/Headers/Header.jsx";
+import OptionComponent from "../components/Option/Option";
+import CustomLoader from "../components/Loader/CustomLoader";
+import DataTable from "react-data-table-component";
+import orderBy from "lodash/orderBy";
 
-import { withTranslation } from 'react-i18next'
-import { Query, Mutation, compose, withApollo } from 'react-apollo'
-import { options, deleteOption } from '../apollo/server'
-import gql from 'graphql-tag'
-import Loader from 'react-loader-spinner'
-import Alert from '../components/Alert'
+import { withTranslation } from "react-i18next";
+import { Query, Mutation, compose, withApollo } from "react-apollo";
+import { options, deleteOption } from "../apollo/server";
+import gql from "graphql-tag";
+import Loader from "react-loader-spinner";
+import Alert from "../components/Alert";
 
 const GET_OPTIONS = gql`
   ${options}
-`
+`;
 const DELETE_OPTION = gql`
   ${deleteOption}
-`
+`;
 
-const Option = props => {
-  const [editModal, setEditModal] = useState(false)
-  const [option, setOption] = useState(null)
-  const [isOpen, setIsOpen] = useState(false)
+const Option = (props) => {
+  const [editModal, setEditModal] = useState(false);
+  const [option, setOption] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleModal = option => {
-    setEditModal(!editModal)
-    setOption(option)
-  }
+  const toggleModal = (option) => {
+    setEditModal(!editModal);
+    setOption(option);
+  };
 
   const customSort = (rows, field, direction) => {
-    const handleField = row => {
+    const handleField = (row) => {
       if (row[field] && isNaN(row[field])) {
-        return row[field].toLowerCase()
+        return row[field].toLowerCase();
       }
 
-      return row[field]
-    }
+      return row[field];
+    };
 
-    return orderBy(rows, handleField, direction)
-  }
+    return orderBy(rows, handleField, direction);
+  };
 
   const handleSort = (column, sortDirection) =>
-    console.log(column.selector, sortDirection)
+    console.log(column.selector, sortDirection);
 
   const columns = [
     {
-      name: 'Title',
+      name: "Title",
       sortable: true,
-      selector: 'title'
+      selector: "title",
     },
     {
-      name: 'Description',
+      name: "Description",
       sortable: true,
-      selector: 'description'
+      selector: "description",
     },
     {
-      name: 'Price',
+      name: "Price",
       sortable: true,
-      selector: 'price'
+      selector: "price",
     },
     {
-      name: 'Action',
-      cell: row => <>{actionButtons(row)}</>
-    }
-  ]
-  const actionButtons = row => {
+      name: "Action",
+      cell: (row) => <>{actionButtons(row)}</>,
+    },
+  ];
+  const actionButtons = (row) => {
     return (
       <>
         <Badge
           href="#pablo"
-          onClick={e => {
-            e.preventDefault()
-            toggleModal(row)
+          onClick={(e) => {
+            e.preventDefault();
+            toggleModal(row);
           }}
-          color="primary">
+          color="primary"
+        >
           Edit
         </Badge>
         &nbsp;&nbsp;
         <Mutation
           mutation={DELETE_OPTION}
           refetchQueries={[{ query: GET_OPTIONS }]}
-          update={update}>
+          update={update}
+        >
           {(deleteOption, { loading: deleteLoading }) => {
             if (deleteLoading) {
               return (
@@ -94,44 +96,45 @@ const Option = props => {
                   width={40}
                   visible={deleteLoading}
                 />
-              )
+              );
             }
             return (
               <Badge
                 href="#pablo"
                 color="danger"
-                onClick={e => {
-                  e.preventDefault()
+                onClick={(e) => {
+                  e.preventDefault();
                   // deleteOption({ variables: { id: row._id } })
-                  setIsOpen(true)
+                  setIsOpen(true);
                   setTimeout(() => {
-                    setIsOpen(false)
-                  }, 2000)
-                }}>
-                {'Delete'}
+                    setIsOpen(false);
+                  }, 2000);
+                }}
+              >
+                {"Delete"}
               </Badge>
-            )
+            );
           }}
         </Mutation>
       </>
-    )
-  }
+    );
+  };
 
   const update = (proxy, { data: { deleteOption } }) => {
     try {
       if (deleteOption) {
-        const data = proxy.readQuery({ query: GET_OPTIONS })
+        const data = proxy.readQuery({ query: GET_OPTIONS });
         data.options = data.options.filter(
-          option => option._id !== deleteOption
-        )
-        proxy.writeQuery({ query: GET_OPTIONS, data })
+          (option) => option._id !== deleteOption
+        );
+        proxy.writeQuery({ query: GET_OPTIONS, data });
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
-  const { t } = props
+  const { t } = props;
   return (
     <>
       <Header />
@@ -153,14 +156,14 @@ const Option = props => {
                     return (
                       <tr>
                         <td>
-                          `${t('Error')}! ${error.message}`
+                          `${t("Error")}! ${error.message}`
                         </td>
                       </tr>
-                    )
+                    );
                   }
                   return (
                     <DataTable
-                      title={t('Options')}
+                      title={t("Options")}
                       columns={columns}
                       data={data.allOptions}
                       pagination
@@ -170,7 +173,7 @@ const Option = props => {
                       sortFunction={customSort}
                       defaultSortField="title"
                     />
-                  )
+                  );
                 }}
               </Query>
             </Card>
@@ -181,13 +184,14 @@ const Option = props => {
           size="lg"
           isOpen={editModal}
           toggle={() => {
-            toggleModal()
-          }}>
+            toggleModal();
+          }}
+        >
           <OptionComponent option={option} />
         </Modal>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default compose(withApollo, withTranslation())(Option)
+export default compose(withApollo, withTranslation())(Option);
