@@ -15,6 +15,7 @@ import "assets/vendor/nucleo/css/nucleo.css";
 import "assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/argon-dashboard-react.scss";
 import { getOrders, uploadToken } from "../src/apollo/server";
+import './i18n'
 
 import { ws_server_url, server_url } from "./config/config";
 import App from "./app";

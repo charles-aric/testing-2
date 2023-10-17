@@ -18,7 +18,8 @@ import {
 function AdminNavbar(props) {
   const handleChange = (event) => {
     localStorage.setItem("enatega-language", event.target.value);
-    props.i18n.changeLanguage(event.target.value);
+    const newLanguage = event.target.value;
+    props.i18n.changeLanguage(newLanguage);
   };
   const { t } = props;
   return (
