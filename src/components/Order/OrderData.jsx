@@ -19,6 +19,7 @@ const ORDER_PLACED = gql`
 
 const OrdersData = (props) => {
   const { t, selected, updateSelected } = props;
+  console.log(props)
   const [search, setSearch] = useState("");
   const getItems = (items) => {
     return items
@@ -58,7 +59,7 @@ const OrdersData = (props) => {
       <div>
         <InputGroup>
           <Input
-            placeholder="Filter By Order Id"
+            placeholder={t('filterByOrderId')}
             value={search}
             onChange={(event) => {
               props.search(event.target.value);
@@ -86,7 +87,7 @@ const OrdersData = (props) => {
 
   const columns = [
     {
-      name: "OrderID",
+      name: t('OrderID'),
       sortable: true,
       selector: "order_id",
       cell: (row) => (
@@ -96,7 +97,7 @@ const OrdersData = (props) => {
       ),
     },
     {
-      name: "User",
+      name: t('Users'),
       sortable: true,
       selector: "user.name",
       cell: (row) => (
@@ -104,25 +105,25 @@ const OrdersData = (props) => {
       ),
     },
     {
-      name: "Items",
+      name: t('Items'),
       cell: (row) => <>{getItems(row.items)}</>,
     },
     {
-      name: "Payment",
+      name: t('Payment'),
       selector: "payment_status",
     },
     {
-      name: "Status",
+      name: t('Status'),
       selector: "order_status",
     },
     {
-      name: "Datetime",
+      name: t('datetime'),
       cell: (row) => (
         <>{new Date(row.createdAt).toLocaleString().replace(/ /g, "\n")}</>
       ),
     },
     {
-      name: "Address",
+      name: t('Address'),
       cell: (row) => (
         <>{transformToNewline(row.delivery_address.delivery_address, 3)}</>
       ),

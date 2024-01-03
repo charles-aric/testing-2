@@ -26,6 +26,7 @@ const NOTIFICATION_USER = gql`
 `;
 
 const Notifications = (props) => {
+  const { t } = props;
   const [notificationTitle, setNotificationTitle] = useState("");
   const [notificationBody, setNotificationBody] = useState("");
   const [bodyError, setBodyError] = useState(null);
@@ -59,7 +60,6 @@ const Notifications = (props) => {
     setError("");
   };
 
-  const { t } = props;
   return (
     <>
       <Header />
@@ -71,7 +71,7 @@ const Notifications = (props) => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Notifications</h3>
+                    <h3 className="mb-0">{t('Notifications')}</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -111,7 +111,7 @@ const Notifications = (props) => {
                                     <Input
                                       className="form-control-alternative"
                                       id="input-title"
-                                      placeholder="e.g Hello"
+                                      placeholder={t('egHello')}
                                       type="text"
                                       value={notificationTitle}
                                       onChange={(event) => {
@@ -130,7 +130,7 @@ const Notifications = (props) => {
                                     className="form-control-label"
                                     htmlFor="input-title"
                                   >
-                                    {t("Body")}
+                                    {t("body")}
                                   </label>
                                   <br />
                                   <FormGroup
@@ -145,7 +145,7 @@ const Notifications = (props) => {
                                     <Input
                                       className="form-control-alternative"
                                       id="input-title"
-                                      placeholder="e.g Hello"
+                                      placeholder={t('egHello')}
                                       type="text"
                                       value={notificationBody}
                                       onChange={(event) => {
@@ -180,7 +180,7 @@ const Notifications = (props) => {
                                     }}
                                     size="lg"
                                   >
-                                    {t("Send")}
+                                    {t("send")}
                                   </Button>
                                 </Col>
                               </Row>

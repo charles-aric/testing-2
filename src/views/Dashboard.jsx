@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // node.js library that concatenates classes (strings)
 // react plugin used to create charts
 import { Line, Bar } from "react-chartjs-2";
+import { withTranslation } from "react-i18next";
 // reactstrap components
 import {
   Button,
@@ -35,7 +36,7 @@ const GET_DASHBOARD_ORDERS = gql`
   ${getDashboardOrders}
 `;
 
-const dataLine = {
+/*const dataLine = {
   datasets: {
     label: "Sales Amount",
     fill: false,
@@ -66,7 +67,7 @@ const dataBar = {
     hoverBackgroundColor: "rgba(255,99,132,0.4)",
     hoverBorderColor: "rgba(255,99,132,1)",
   },
-};
+};*/
 
 const intializeStartDate = () => {
   var d = new Date();
@@ -74,11 +75,44 @@ const intializeStartDate = () => {
   return d.toISOString().substr(0, 10);
 };
 const Dashboard = (props) => {
+
   const [startingDate, setStartingDate] = useState(intializeStartDate);
   const [endingDate, setEndingDate] = useState(
     new Date().toISOString().substr(0, 10)
   );
-
+const {t} = props
+const dataLine = {
+  datasets: {
+    label: t('salesAmount'),
+    fill: false,
+    lineTension: 0.1,
+    backgroundColor: "rgba(75,192,192,0.4)",
+    borderColor: "rgba(75,192,192,1)",
+    borderCapStyle: "butt",
+    borderDash: [],
+    borderDashOffset: 0.0,
+    borderJoinStyle: "miter",
+    pointBorderColor: "rgba(75,192,192,1)",
+    pointBackgroundColor: "#fff",
+    pointBorderWidth: 1,
+    pointHoverRadius: 5,
+    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+    pointHoverBorderColor: "rgba(220,220,220,1)",
+    pointHoverBorderWidth: 2,
+    pointRadius: 1,
+    pointHitRadius: 10,
+  },
+};
+const dataBar = {
+  datasets: {
+    label: t('orderCount'),
+    backgroundColor: "rgba(255,99,132,0.2)",
+    borderColor: "rgba(255,99,132,1)",
+    borderWidth: 1,
+    hoverBackgroundColor: "rgba(255,99,132,0.4)",
+    hoverBorderColor: "rgba(255,99,132,1)",
+  },
+};
   return (
     <>
       <Header />
@@ -101,7 +135,7 @@ const Dashboard = (props) => {
                       <Row>
                         <div className="col">
                           <CardTitle className="text-uppercase text-muted mb-0">
-                            Total Orders
+                            {t('totalOrders')}
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
@@ -124,7 +158,7 @@ const Dashboard = (props) => {
                       <Row>
                         <div className="col">
                           <CardTitle className="text-uppercase text-muted mb-0">
-                            Total Users
+                            {t('totalUsers')}
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
@@ -147,7 +181,7 @@ const Dashboard = (props) => {
                       <Row>
                         <div className="col">
                           <CardTitle className="text-uppercase text-muted mb-0">
-                            Total Sales
+                            {t('totalSales')}
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
@@ -170,7 +204,7 @@ const Dashboard = (props) => {
                       <Row>
                         <div className="col">
                           <CardTitle className="text-uppercase text-muted mb-0">
-                            Average Ratings/Total Ratings
+                            {t('averageTotal')}
                           </CardTitle>
                           <span className="h2 font-weight-bold mb-0">
                             {loading
@@ -202,7 +236,7 @@ const Dashboard = (props) => {
               <CardHeader className="bg-transparent">
                 <Row className="align-items-center">
                   <h6 className="text-uppercase text-light ls-1 mb-1">
-                    Filter Graph
+                    {t('filterGraph')}
                   </h6>
                 </Row>
               </CardHeader>
@@ -211,7 +245,7 @@ const Dashboard = (props) => {
                   <Col xl="4">
                     <FormGroup>
                       <label className="form-control-label">
-                        Starting Date
+                        {t('startingDate')}
                       </label>
                       <Input
                         className="form-control-alternative"
@@ -227,7 +261,7 @@ const Dashboard = (props) => {
                   </Col>
                   <Col xl="4">
                     <FormGroup>
-                      <label className="form-control-label">Ending Date</label>
+                      <label className="form-control-label">{t('endingDate')}</label>
                       <Input
                         className="form-control-alternative"
                         type="date"
@@ -245,10 +279,10 @@ const Dashboard = (props) => {
                         className="form-control-label"
                         htmlFor="input-description"
                       >
-                        Filter Graph
+                        {t('filterGraph')}
                       </label>
                       <Button className="btn-block" color="primary">
-                        Submit
+                        {t('submit')}
                       </Button>
                     </FormGroup>
                   </Col>
@@ -274,9 +308,9 @@ const Dashboard = (props) => {
                       <Row className="align-items-center">
                         <div className="col">
                           <h6 className="text-uppercase text-muted ls-1 mb-1">
-                            Overview
+                            {t('overview')}
                           </h6>
-                          <h2 className="mb-0">Sales value</h2>
+                          <h2 className="mb-0">{t('salesValue')}</h2>
                         </div>
                       </Row>
                     </CardHeader>
@@ -323,9 +357,9 @@ const Dashboard = (props) => {
                       <Row className="align-items-center">
                         <div className="col">
                           <h6 className="text-uppercase text-muted ls-1 mb-1">
-                            Performance
+                            {t('performance')}
                           </h6>
-                          <h2 className="mb-0">Total orders</h2>
+                          <h2 className="mb-0">{t('totalOrders')}</h2>
                         </div>
                       </Row>
                     </CardHeader>
@@ -369,4 +403,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+export default withTranslation()(Dashboard);

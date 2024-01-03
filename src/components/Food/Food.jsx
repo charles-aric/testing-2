@@ -254,8 +254,8 @@ function Food(props) {
   const onCompleted = (data) => {
     if (!props.food) clearFields();
     const message = props.food
-      ? "Food updated successfully"
-      : "Food added successfully";
+      ? t('foodUpdated')
+      : t('foodAdded');
     errorSetter("");
     successSetter(message);
   };
@@ -384,7 +384,7 @@ function Food(props) {
                                   <Input
                                     className="form-control-alternative"
                                     id="input-title"
-                                    placeholder="e.g Breakfast"
+                                    placeholder={t('egBreakfast')}
                                     type="text"
                                     value={title}
                                     onChange={(event) => {
@@ -418,7 +418,7 @@ function Food(props) {
                                   <Input
                                     className="form-control-alternative"
                                     id="input-description"
-                                    placeholder="e.g All happiness depends on leisurely breakfast."
+                                    placeholder={t('egAllHappiness')}
                                     minLength="20"
                                     type="textarea"
                                     value={description}
@@ -498,7 +498,7 @@ function Food(props) {
                                   className="form-control-label"
                                   htmlFor="input-stock"
                                 >
-                                  {t("Stock")}
+                                  {t("stock")}
                                 </label>
                                 <FormGroup
                                   className={
@@ -512,7 +512,7 @@ function Food(props) {
                                   <Input
                                     className="form-control-alternative"
                                     id="input-stock"
-                                    placeholder="e.g 9"
+                                    placeholder={t('eg9')}
                                     type="number"
                                     value={stock}
                                     onChange={(event) => {
@@ -567,7 +567,7 @@ function Food(props) {
                                   </label>
                                   <br />
                                   <small style={{ color: "blue" }}>
-                                    Title must be unqiue
+                                    {t('uniqueTitle')}
                                   </small>
                                 </FormGroup>
                               </Col>
@@ -587,7 +587,7 @@ function Food(props) {
                                     className="form-control-label"
                                     htmlFor="input-price"
                                   >
-                                    {t("Discounted")}
+                                    {t("discounted")}
                                   </label>
                                 </FormGroup>
                               </Col>
@@ -610,7 +610,7 @@ function Food(props) {
                                         className="form-control-alternative"
                                         value={variation.title}
                                         id="input-type"
-                                        placeholder="e.g Small"
+                                        placeholder={t('egSmall')}
                                         type="text"
                                         autoComplete="off"
                                         onChange={(event) => {
@@ -641,7 +641,7 @@ function Food(props) {
                                         className="form-control-alternative"
                                         value={variation.price}
                                         id="input-price"
-                                        placeholder="e.g 9.99"
+                                        placeholder={t('eg99')}
                                         type="number"
                                         onChange={(event) => {
                                           handleVariationChange(
@@ -671,7 +671,7 @@ function Food(props) {
                                         className="form-control-alternative"
                                         value={variation.discounted}
                                         id="input-discounted"
-                                        placeholder="e.g 9.99"
+                                        placeholder={t('eg99')}
                                         type="number"
                                         onChange={(event) => {
                                           handleVariationChange(
@@ -694,7 +694,7 @@ function Food(props) {
                                       onClick={() => toggleModal(index)}
                                       color="warning"
                                     >
-                                      New Addon
+                                     {t('newAddon')}
                                     </Button>
                                   </Col>
                                 </Row>

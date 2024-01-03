@@ -29,6 +29,7 @@ const EDIT_OPTION = gql`
 `;
 
 function Option(props) {
+  const { t } = props;
   const option = props.option
     ? [
         {
@@ -128,16 +129,16 @@ function Option(props) {
           priceError: false,
         },
       ]);
-      successSetter("Saved");
+      successSetter(t('saved'));
       errorSetter("");
     }
     if (editOption) {
-      successSetter("Saved");
+      successSetter(t('saved'));
       errorSetter("");
     }
   };
   const onError = () => {
-    errorSetter("An error occured while saving,Try again");
+    errorSetter(t('errorOccured'));
     successSetter("");
   };
   const update = (proxy, { data: { createOptions } }) => {
@@ -158,10 +159,10 @@ function Option(props) {
     successSetter("");
     errorSetter("");
   };
-  const { t } = props;
+  
   return (
     <Card>
-      <CardHeader>Option</CardHeader>
+      <CardHeader>{t('option')}</CardHeader>
       <CardBody>
         <Form>
           <div>
@@ -186,7 +187,7 @@ function Option(props) {
                   {t("Price")}
                 </label>
                 <br />
-                <small>{t("Must be a number")}</small>
+                <small>{t('mustBeANumber')}</small>
               </Col>
               {!props.option && (
                 <Col lg="3">
@@ -205,7 +206,7 @@ function Option(props) {
                     <Input
                       className="form-control-alternative"
                       id="input-title"
-                      placeholder="e.g Pepsi"
+                      placeholder={t('egPepsi')}
                       type="text"
                       value={option.title}
                       onChange={(event) => {
@@ -226,7 +227,7 @@ function Option(props) {
                     <Input
                       className="form-control-alternative"
                       id="input-description"
-                      placeholder="e.g Optional"
+                      placeholder={t('egOptional')}
                       type="text"
                       value={option.description}
                       onChange={(event) => {
@@ -334,7 +335,7 @@ function Option(props) {
                         }}
                       >
                         {" "}
-                        Save
+                        {t('Save')}
                       </Button>
                     );
                   }}

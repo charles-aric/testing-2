@@ -41,6 +41,7 @@ const EDIT_ADDON = gql`
 `;
 
 function Addon(props) {
+  const { t } = props;
   const addon = props.addon
     ? [
         {
@@ -208,16 +209,16 @@ function Addon(props) {
           quantity_maximumError: false,
         },
       ]);
-      successSetter("Saved");
+      successSetter(t('saved'));
       errorSetter("");
     }
     if (editAddon) {
-      successSetter("Saved");
+      successSetter(t('saved'));
       errorSetter("");
     }
   };
   const onError = () => {
-    errorSetter("An error occured while saving,Try again");
+    errorSetter(t('errorOccured'));
     successSetter("");
   };
   const update = (proxy, { data: { createAddons } }) => {
@@ -238,10 +239,10 @@ function Addon(props) {
     errorSetter("");
     successSetter("");
   };
-  const { t } = props;
+ 
   return (
     <Card>
-      <CardHeader>Addons</CardHeader>
+      <CardHeader>{t('Addons')}</CardHeader>
       <CardBody>
         <Form>
           <div>
@@ -266,7 +267,7 @@ function Addon(props) {
                           <Input
                             className="form-control-alternative"
                             id="input-title"
-                            placeholder="e.g Pepsi"
+                            placeholder={t('egPepsi')}
                             type="text"
                             value={addon.title}
                             onChange={(event) => {
@@ -296,7 +297,7 @@ function Addon(props) {
                           <Input
                             className="form-control-alternative"
                             id="input-description"
-                            placeholder="e.g Optional"
+                            placeholder={t('egOptional')}
                             type="text"
                             value={addon.description || ""}
                             onChange={(event) => {
@@ -315,11 +316,11 @@ function Addon(props) {
                           className="form-control-label"
                           htmlFor="input-minimum"
                         >
-                          {t("Quantity Minimum")}
+                          {t("quantityMinimum")}
                         </label>
                         <br />
                         <small>
-                          {t("Must be a less than or equal to Maximum")}
+                          {t("quantityMinText")}
                         </small>
                         <FormGroup
                           className={
@@ -351,11 +352,11 @@ function Addon(props) {
                           className="form-control-label"
                           htmlFor="input-maximum"
                         >
-                          {t("Quantity Maximum")}
+                          {t("quantityMaximum")}
                         </label>
                         <br />
                         <small>
-                          {t("Must be a greater than or equal to Minimum")}
+                          {t("quantityMaxText")}
                         </small>
                         <FormGroup
                           className={
@@ -391,7 +392,7 @@ function Addon(props) {
                         <br />
                         {!addons[index].options.length && (
                           <small className="text-red">
-                            {t("Select atleast one Option")}
+                            {t("selectOneOption")}
                           </small>
                         )}
                       </Col>
@@ -403,7 +404,7 @@ function Addon(props) {
                             color="warning"
                             onClick={toggleModal.bind(this, index)}
                           >
-                            New
+                            {t('new')}
                           </Button>
                         </FormGroup>
                       </Col>
@@ -446,7 +447,7 @@ function Addon(props) {
                       <Row className="mt-2">
                         <Col>
                           <label className="form-control-label">
-                            {t("Add/Remove Addons")}
+                            {t("addRemoveAddons")}
                           </label>
                           <FormGroup>
                             <Button
@@ -546,7 +547,7 @@ function Addon(props) {
                         }}
                       >
                         {" "}
-                        Save
+                        {t('Save')}
                       </Button>
                     );
                   }}

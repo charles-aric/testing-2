@@ -26,6 +26,7 @@ const GET_FOODS = gql`
 `;
 
 const Category = (props) => {
+  const { t } = props;
   const [editModal, setEditModal] = useState(false);
   const [category, setCategory] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -52,17 +53,17 @@ const Category = (props) => {
 
   const columns = [
     {
-      name: "Title",
+      name: t('Title'),
       sortable: true,
       selector: "title",
     },
     {
-      name: "Description",
+      name: t('Description'),
       sortable: true,
       selector: "description",
     },
     {
-      name: "Image",
+      name: t('Image'),
       cell: (row) => (
         <>
           {!!row.img_menu && (
@@ -73,7 +74,7 @@ const Category = (props) => {
       ),
     },
     {
-      name: "Action",
+      name: t('actions'),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
@@ -88,7 +89,7 @@ const Category = (props) => {
           }}
           color="primary"
         >
-          Edit
+          {t('Edit')}
         </Badge>
         &nbsp;&nbsp;
         <Mutation
@@ -120,7 +121,7 @@ const Category = (props) => {
                   }, 2000);
                 }}
               >
-                {"Delete"}
+               {t('Delete')}
               </Badge>
             );
           }}
@@ -128,7 +129,7 @@ const Category = (props) => {
       </>
     );
   };
-  const { t } = props;
+  
   return (
     <>
       <Header />
@@ -141,7 +142,7 @@ const Category = (props) => {
             <Card className="shadow">
               {isOpen && (
                 <Alert
-                  message="Delete feature will available after purchasing product"
+                  message={t('purchaseText')}
                   severity="warning"
                 />
               )}

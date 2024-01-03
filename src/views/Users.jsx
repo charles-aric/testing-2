@@ -15,26 +15,27 @@ const GET_USERS = gql`
   ${getUsers}
 `;
 const Users = (props) => {
+  const { t } = props;
   const columns = [
     {
-      name: "Name",
+      name: t('Name'),
       sortable: true,
       selector: "name",
     },
     {
-      name: "Email",
+      name: t('Email'),
       sortable: true,
       selector: "email",
       cell: (row) => hiddenData(row.email, "EMAIL"),
     },
     {
-      name: "Phone",
+      name: t('Phone'),
       sortable: true,
       selector: "phone",
       cell: (row) => hiddenData(row.phone, "PHONE"),
     },
     {
-      name: "Address",
+      name: t('Address'),
       cell: (row) => (
         <>
           {transformToNewline(
@@ -75,7 +76,7 @@ const Users = (props) => {
   const handleSort = (column, sortDirection) =>
     console.log(column.selector, sortDirection);
 
-  const { t } = props;
+ 
 
   return (
     <>

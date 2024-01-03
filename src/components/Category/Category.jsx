@@ -96,15 +96,15 @@ function Category(props) {
   };
   const onCompleted = (data) => {
     const message = props.category
-      ? "Category updated successfully"
-      : "Category added successfully";
+      ? t("categoryUpdated")
+      : t("categoryAdded");
     successMessageSetter(message);
     errorMessageSetter("");
     if (!props.category) clearFields();
     setTimeout(hideMessage, 3000);
   };
   const onError = () => {
-    const message = "Action failed. Please Try again";
+    const message = t('actionFailed');
     successMessageSetter("");
     errorMessageSetter(message);
     setTimeout(hideMessage, 3000);
@@ -182,7 +182,7 @@ function Category(props) {
                       <Input
                         className="form-control-alternative"
                         id="input-title"
-                        placeholder="e.g Breakfast"
+                        placeholder={t('egBreakfast')}
                         type="text"
                         value={title}
                         onChange={(event) => {
@@ -216,7 +216,7 @@ function Category(props) {
                       <Input
                         className="form-control-alternative"
                         id="input-description"
-                        placeholder="e.g All happiness depends on leisurely breakfast."
+                        placeholder={t('egAllHappiness')}
                         type="text"
                         value={description}
                         onChange={(event) => {

@@ -21,6 +21,7 @@ const DELETE_ADDON = gql`
 `;
 
 const Addon = (props) => {
+  const { t } = props;
   const [addon, setAddon] = useState(null);
   const [editModal, setEditModal] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -47,27 +48,27 @@ const Addon = (props) => {
 
   const columns = [
     {
-      name: "Title",
+      name: t("Title"),
       sortable: true,
       selector: "title",
     },
     {
-      name: "Description",
+      name: t("Description"),
       sortable: true,
       selector: "description",
     },
     {
-      name: "Minimum",
+      name: t("minimum"),
       sortable: true,
       selector: "quantity_minimum",
     },
     {
-      name: "Maximum",
+      name: t("maximum"),
       sortable: true,
       selector: "quantity_maximum",
     },
     {
-      name: "Action",
+      name: t("actions"),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
@@ -83,7 +84,7 @@ const Addon = (props) => {
           }}
           color="primary"
         >
-          Edit
+          {t('Edit')}
         </Badge>
         &nbsp;&nbsp;
         <Mutation mutation={DELETE_ADDON} update={update}>
@@ -113,7 +114,7 @@ const Addon = (props) => {
                     }, 2000);
                   }}
                 >
-                  {"Delete"}
+                  {t("Delete")}
                 </Badge>
               </>
             );
@@ -135,7 +136,7 @@ const Addon = (props) => {
     }
   };
 
-  const { t } = props;
+  
   return (
     <>
       <Header />
@@ -147,7 +148,7 @@ const Addon = (props) => {
             <Card className="shadow">
               {isOpen && (
                 <Alert
-                  message="Delete feature will available after purchasing product"
+                  message={t('purchaseText')}
                   severity="warning"
                 />
               )}

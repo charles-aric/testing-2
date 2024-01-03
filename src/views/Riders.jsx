@@ -66,7 +66,7 @@ function Riders(props) {
       selector: "name",
     },
     {
-      name: t("Username"),
+      name: t("username"),
       sortable: true,
       selector: "username",
     },
@@ -81,11 +81,11 @@ function Riders(props) {
       selector: "phone",
     },
     {
-      name: t("Available"),
+      name: t("available"),
       cell: (row) => <>{availableStatus(row)}</>,
     },
     {
-      name: "Action",
+      name: t("actions"),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
@@ -131,7 +131,7 @@ function Riders(props) {
           }}
           color="primary"
         >
-          Edit
+          {t('Edit')}
         </Badge>
         &nbsp;&nbsp;
         <Mutation
@@ -163,7 +163,7 @@ function Riders(props) {
                   }, 2000);
                 }}
               >
-                {"Delete"}
+                {t('Delete')}
               </Badge>
             );
           }}
@@ -184,7 +184,7 @@ function Riders(props) {
             <Card className="shadow">
               {isOpen && (
                 <Alert
-                  message="Delete feature will available after purchasing product"
+                  message={t('purchaseText')}
                   severity="warning"
                 />
               )}

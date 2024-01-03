@@ -79,8 +79,8 @@ function Rider(props) {
   const onCompleted = (data) => {
     if (!props.rider) clearFields();
     const message = props.rider
-      ? "Rider updated successfully"
-      : "Rider added successfully";
+      ? t('riderUpdatedText')
+      : t('riderAddedText');
     errorSetter("");
     successSetter(message);
     setTimeout(hideAlert, 5000);
@@ -98,10 +98,12 @@ function Rider(props) {
   };
   const onError = ({ graphQLErrors, networkError }) => {
     console.log(networkError);
+    console.log(graphQLErrors)
+    console.log(graphQLErrors[0].message)
     if (networkError) {
       errorSetter(networkError.result.errors[0].message);
     } else if (graphQLErrors) {
-      errorSetter(graphQLErrors.result.errors[0].message);
+      errorSetter(graphQLErrors[0].message);
     }
     successSetter("");
     setTimeout(hideAlert, 5000);
@@ -120,7 +122,7 @@ function Rider(props) {
             <Row className="align-items-center">
               <Col xs="8">
                 <h3 className="mb-0">
-                  {props.rider ? t("Edit Rider") : t("Add Rider")}
+                  {props.rider ? t("editRider") : t("addRider")}
                 </h3>
               </Col>
             </Row>
@@ -188,7 +190,7 @@ function Rider(props) {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            {t("Username")}
+                            {t("username")}
                           </label>
                           <br />
                           <small>{t("Character limit of max length 20")}</small>
@@ -304,7 +306,7 @@ function Rider(props) {
                             className="form-control-label"
                             htmlFor="input-available"
                           >
-                            {t("Available")}
+                            {t("available")}
                           </label>
                           <FormGroup>
                             <label className="custom-toggle">

@@ -24,6 +24,7 @@ const DELETE_FOOD = gql`
 `;
 
 const Food = (props) => {
+  const { t } = props;
   const [editModal, setEditModal] = useState(false);
   const [food, setFood] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +57,7 @@ const Food = (props) => {
 
   const columns = [
     {
-      name: "Title",
+      name: t('Title'),
       selector: "title",
       sortable: true,
       cell: (row) => (
@@ -68,19 +69,19 @@ const Food = (props) => {
       ),
     },
     {
-      name: "Description",
+      name: t('Description'),
       sortable: true,
       selector: "description",
       cell: (row) => <>{transformToNewline(row.description, 3)}</>,
     },
     {
-      name: "Category",
+      name: t('Categories'),
       sortable: true,
       selector: "category.title",
       cell: (row) => <>{row.category.title}</>,
     },
     {
-      name: "Image",
+      name: t('Image'),
       cell: (row) => (
         <>
           {!!row.img_url && (
@@ -91,7 +92,7 @@ const Food = (props) => {
       ),
     },
     {
-      name: "Action",
+      name: t('Actions'),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
@@ -107,7 +108,7 @@ const Food = (props) => {
           }}
           color="primary"
         >
-          Edit
+          {t('Edit')}
         </Badge>
         &nbsp;&nbsp;
         <Mutation
@@ -139,7 +140,7 @@ const Food = (props) => {
                   }, 2000);
                 }}
               >
-                {"Delete"}
+                {t('Delete')}
               </Badge>
             );
           }}
@@ -148,7 +149,7 @@ const Food = (props) => {
     );
   };
 
-  const { t } = props;
+ 
   return (
     <>
       <Header />
@@ -161,7 +162,7 @@ const Food = (props) => {
             <Card className="shadow">
               {isOpen && (
                 <Alert
-                  message="Delete feature will available after purchasing product"
+                  message={t('purchaseText')}
                   severity="warning"
                 />
               )}
