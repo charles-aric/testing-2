@@ -92,7 +92,7 @@ const Food = (props) => {
       ),
     },
     {
-      name: t('Actions'),
+      name: t('actions'),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
