@@ -15,21 +15,22 @@ const REVIEWS = gql`
 `;
 
 const Ratings = (props) => {
+  const { t } = props;
   const columns = [
     {
-      name: "Name",
+      name: t('Name'),
       sortable: true,
       selector: "order.user.name",
       cell: (row) => <>{row.order.user.name}</>,
     },
     {
-      name: "Email",
+      name: t('Email'),
       sortable: true,
       selector: "order.user.email",
       cell: (row) => <>{row.order.user.email}</>,
     },
     {
-      name: "Items",
+      name: t('Items'),
       cell: (row) => (
         <>
           {row.order.items.map(({ food }) => {
@@ -39,13 +40,13 @@ const Ratings = (props) => {
       ),
     },
     {
-      name: "Review",
+      name: t('Review'),
       sortable: true,
       selector: "description",
       cell: (row) => <>{row.description}</>,
     },
     {
-      name: "Ratings",
+      name: t('Ratings'),
       sortable: true,
       selector: "rating",
       cell: (row) => <>{row.rating}</>,
@@ -71,7 +72,7 @@ const Ratings = (props) => {
 
   const handleSort = (column, sortDirection) =>
     console.log(column.selector, sortDirection, column);
-  const { t } = props;
+
   return (
     <>
       <Header />

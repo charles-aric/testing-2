@@ -61,7 +61,7 @@ function Coupan(props) {
     discountErrorSetter(null);
   };
   const onCompleted = (data) => {
-    const message = props.coupon ? "Coupon updated" : "Coupon added";
+    const message = props.coupon ? t('couponUpdatedText') : t('couponAddedText');
     successMessageSetter(message);
     errorMessageSetter("");
     if (!props.coupon) clearFields();
@@ -72,7 +72,7 @@ function Coupan(props) {
     try {
       message = error.networkError.result.errors[0].message;
     } catch (err) {
-      message = "Action failed. Please Try again";
+      message = t('actionFailedError');
     }
     // const message = 'Action failed. Please Try again'
     successMessageSetter("");
@@ -98,7 +98,7 @@ function Coupan(props) {
             <Row className="align-items-center">
               <Col xs="8">
                 <h3 className="mb-0">
-                  {props.coupon ? t("Edit Coupon") : t("Add Coupon")}
+                  {props.coupon ? t("editCoupon") : t("addCoupon")}
                 </h3>
               </Col>
             </Row>
@@ -109,7 +109,7 @@ function Coupan(props) {
                 <Row>
                   <Col lg="6">
                     <label className="form-control-label" htmlFor="input-code">
-                      {t("Coupon Code")}
+                      {t("couponCode")}
                     </label>
                     <br />
                     <br />
@@ -125,7 +125,7 @@ function Coupan(props) {
                       <Input
                         className="form-control-alternative"
                         id="input-code"
-                        placeholder="e.g SALE50"
+                        placeholder={t('egSales')}
                         type="text"
                         value={code}
                         onChange={(event) => {
@@ -142,10 +142,10 @@ function Coupan(props) {
                       className="form-control-label"
                       htmlFor="input-discount"
                     >
-                      {t("Discount Percent")}
+                      {t("discountPercent")}
                     </label>
                     <br />
-                    <small>Between 1 and 100</small>
+                    <small>{t('btw1And100')}</small>
                     <FormGroup
                       className={
                         discountError === null
@@ -178,7 +178,7 @@ function Coupan(props) {
                         className="form-control-label"
                         htmlFor="input-enabled"
                       >
-                        {t("Enabled/Disabled")}
+                        {t("enableDisable")}
                       </label>
                       <FormGroup>
                         <label className="custom-toggle">

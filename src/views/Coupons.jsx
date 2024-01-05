@@ -27,6 +27,7 @@ const DELETE_COUPON = gql`
 `;
 
 const Coupon = (props) => {
+  const { t } = props;
   const [editModal, setEditModal] = useState(false);
   const [coupon, setCoupon] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -53,21 +54,21 @@ const Coupon = (props) => {
 
   const columns = [
     {
-      name: "Code",
+      name: t('code'),
       sortable: true,
       selector: "code",
     },
     {
-      name: "Discount %",
+      name: t('discount'),
       sortable: true,
       selector: "discount",
     },
     {
-      name: "Status",
+      name: t('Status'),
       cell: (row) => <>{statusChanged(row)}</>,
     },
     {
-      name: "Action",
+      name: t('actions'),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
@@ -111,7 +112,7 @@ const Coupon = (props) => {
           }}
           color="primary"
         >
-          Edit
+         {t('Edit')}
         </Badge>
         &nbsp;&nbsp;
         <Mutation
@@ -143,7 +144,7 @@ const Coupon = (props) => {
                   }, 2000);
                 }}
               >
-                {"Delete"}
+                {t('Delete')}
               </Badge>
             );
           }}
@@ -152,7 +153,7 @@ const Coupon = (props) => {
     );
   };
 
-  const { t } = props;
+ 
   return (
     <>
       <Header />
@@ -165,7 +166,7 @@ const Coupon = (props) => {
             <Card className="shadow">
               {isOpen && (
                 <Alert
-                  message="Delete feature will available after purchasing product"
+                  message={t('purchaseText')}
                   severity="warning"
                 />
               )}

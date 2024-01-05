@@ -22,6 +22,7 @@ const DELETE_OPTION = gql`
 `;
 
 const Option = (props) => {
+  const { t } = props;
   const [editModal, setEditModal] = useState(false);
   const [option, setOption] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -48,22 +49,22 @@ const Option = (props) => {
 
   const columns = [
     {
-      name: "Title",
+      name: t("Title"),
       sortable: true,
       selector: "title",
     },
     {
-      name: "Description",
+      name: t("Description"),
       sortable: true,
       selector: "description",
     },
     {
-      name: "Price",
+      name: t("Price"),
       sortable: true,
       selector: "price",
     },
     {
-      name: "Action",
+      name: t("actions"),
       cell: (row) => <>{actionButtons(row)}</>,
     },
   ];
@@ -78,7 +79,7 @@ const Option = (props) => {
           }}
           color="primary"
         >
-          Edit
+          {t('Edit')}
         </Badge>
         &nbsp;&nbsp;
         <Mutation
@@ -111,7 +112,7 @@ const Option = (props) => {
                   }, 2000);
                 }}
               >
-                {"Delete"}
+                {t("Delete")}
               </Badge>
             );
           }}
@@ -134,7 +135,7 @@ const Option = (props) => {
     }
   };
 
-  const { t } = props;
+
   return (
     <>
       <Header />
@@ -146,7 +147,7 @@ const Option = (props) => {
             <Card className="shadow">
               {isOpen && (
                 <Alert
-                  message="Delete feature will available after purchasing product"
+                  message={t('purchaseText')}
                   severity="warning"
                 />
               )}
