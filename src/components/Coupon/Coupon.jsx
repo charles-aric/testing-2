@@ -159,6 +159,7 @@ function Coupan(props) {
                         className="form-control-alternative"
                         id="input-discount"
                         placeholder="1-99"
+                        min="0"
                         type="number"
                         value={discount}
                         onChange={(event) => {

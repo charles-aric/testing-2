@@ -211,9 +211,9 @@ function Rider(props) {
                               type="text"
                               value={username}
                               onChange={(event) => {
-                                usernameSetter(
-                                  event.target.value.toLowerCase()
-                                );
+                                const enteredUsername = event.target.value;
+                                const usernameWithoutSpaces = enteredUsername.replace(/\s/g, '');
+                                usernameSetter(usernameWithoutSpaces.toLowerCase());
                               }}
                               onBlur={(event) => {
                                 onBlur(
@@ -250,7 +250,8 @@ function Rider(props) {
                               id="input-phone"
                               placeholder="e.g 923458989989"
                               maxLength="20"
-                              type="number"
+                              type="tel"
+                              min="0"
                               value={phone}
                               onChange={(event) => {
                                 phoneSetter(event.target.value);

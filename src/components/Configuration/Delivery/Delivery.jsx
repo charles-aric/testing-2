@@ -72,6 +72,7 @@ function Delivery(props) {
                       id="input-deliverycharges"
                       placeholder="e.g 30.00"
                       type="number"
+                      min="0"
                       defaultValue={deliveryCharges}
                       onChange={(event) => {
                         deliveryChargesSetter(event.target.value);

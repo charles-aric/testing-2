@@ -50,26 +50,26 @@ const GET_FOODS = gql`
 function Food(props) {
   const foodVariations = props.food
     ? props.food.variations.map(({ title, price, discounted, addons }) => {
-        return {
-          title,
-          price,
-          discounted,
-          addons: addons.map((addon) => addon._id),
-          titleError: null,
-          priceError: null,
-        };
-      })
+      return {
+        title,
+        price,
+        discounted,
+        addons: addons.map((addon) => addon._id),
+        titleError: null,
+        priceError: null,
+      };
+    })
     : [
-        {
-          title: "",
-          price: "",
-          discounted: "",
-          addons: [],
-          titleError: null,
-          priceError: null,
-          discountedError: null,
-        },
-      ];
+      {
+        title: "",
+        price: "",
+        discounted: "",
+        addons: [],
+        titleError: null,
+        priceError: null,
+        discountedError: null,
+      },
+    ];
 
   const mutation = useState(props.food ? EDIT_FOOD : CREATE_FOOD);
   const [title, titleSetter] = useState(props.food ? props.food.title : "");
@@ -377,8 +377,8 @@ function Food(props) {
                                     titleError === null
                                       ? ""
                                       : titleError
-                                      ? "has-success"
-                                      : "has-danger"
+                                        ? "has-success"
+                                        : "has-danger"
                                   }
                                 >
                                   <Input
@@ -411,8 +411,8 @@ function Food(props) {
                                     descriptionError === null
                                       ? ""
                                       : descriptionError
-                                      ? "has-success"
-                                      : "has-danger"
+                                        ? "has-success"
+                                        : "has-danger"
                                   }
                                 >
                                   <Input
@@ -454,8 +454,8 @@ function Food(props) {
                                           categoryError === null
                                             ? ""
                                             : categoryError
-                                            ? "has-success"
-                                            : "has-danger"
+                                              ? "has-success"
+                                              : "has-danger"
                                         }
                                       >
                                         <Input
@@ -505,8 +505,8 @@ function Food(props) {
                                     stockError === null
                                       ? ""
                                       : stockError
-                                      ? "has-success"
-                                      : "has-danger"
+                                        ? "has-success"
+                                        : "has-danger"
                                   }
                                 >
                                   <Input
@@ -514,6 +514,7 @@ function Food(props) {
                                     id="input-stock"
                                     placeholder={t('eg9')}
                                     type="number"
+                                    min="0"
                                     value={stock}
                                     onChange={(event) => {
                                       stockSetter(event.target.value);
@@ -602,8 +603,8 @@ function Food(props) {
                                         variation.titleError === false
                                           ? "has-danger"
                                           : variation.titleError === true
-                                          ? "has-success"
-                                          : ""
+                                            ? "has-success"
+                                            : ""
                                       }
                                     >
                                       <Input
@@ -633,8 +634,8 @@ function Food(props) {
                                         variation.priceError === false
                                           ? "has-danger"
                                           : variation.priceError === true
-                                          ? "has-success"
-                                          : ""
+                                            ? "has-success"
+                                            : ""
                                       }
                                     >
                                       <Input
@@ -643,6 +644,7 @@ function Food(props) {
                                         id="input-price"
                                         placeholder={t('eg99')}
                                         type="number"
+                                        min="0"
                                         onChange={(event) => {
                                           handleVariationChange(
                                             event,
@@ -663,8 +665,8 @@ function Food(props) {
                                         variation.discountedError === false
                                           ? "has-danger"
                                           : variation.discountedError === true
-                                          ? "has-success"
-                                          : ""
+                                            ? "has-success"
+                                            : ""
                                       }
                                     >
                                       <Input
@@ -673,6 +675,7 @@ function Food(props) {
                                         id="input-discounted"
                                         placeholder={t('eg99')}
                                         type="number"
+                                        min="0"
                                         onChange={(event) => {
                                           handleVariationChange(
                                             event,
@@ -694,7 +697,7 @@ function Food(props) {
                                       onClick={() => toggleModal(index)}
                                       color="warning"
                                     >
-                                     {t('newAddon')}
+                                      {t('newAddon')}
                                     </Button>
                                   </Col>
                                 </Row>
