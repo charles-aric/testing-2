@@ -248,7 +248,7 @@ function Option(props) {
                       id="input-price"
                       placeholder="e.g 90.25"
                       type="number"
-                      min={"0"}
+                      min="0"
                       value={option.price}
                       onChange={(event) => {
                         onChange(event, index, "price");

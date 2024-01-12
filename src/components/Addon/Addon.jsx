@@ -334,7 +334,7 @@ function Addon(props) {
                             id="input-minimum"
                             placeholder="e.g 90.25"
                             type="number"
-                            min={"0"}
+                            min="0"
                             value={addon.quantity_minimum}
                             onChange={(event) => {
                               onChange(event, index, "quantity_minimum");
@@ -370,7 +370,7 @@ function Addon(props) {
                             id="input-maximum"
                             placeholder="e.g 90.25"
                             type="number"
-                            min={"1"}
+                            min="0"
                             value={addon.quantity_maximum}
                             onChange={(event) => {
                               onChange(event, index, "quantity_maximum");

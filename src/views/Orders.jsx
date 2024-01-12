@@ -23,6 +23,10 @@ const Orders = (props) => {
     setDetailModal(!detailsModal);
   };
 
+  const closeDetailsModal = () => {
+    setDetailModal(false);
+  };  
+
   const { t } = props;
   return (
     <>
@@ -74,7 +78,7 @@ const Orders = (props) => {
             toggleModal(null);
           }}
         >
-          <OrderComponent order={order} />
+          <OrderComponent order={order} onClose={closeDetailsModal} />
         </Modal>
       </Container>
     </>

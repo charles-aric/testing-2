@@ -23,7 +23,7 @@ function Stripe(props) {
       <div className="col">
         <Card className="shadow">
           <CardHeader className="border-0">
-            <h3 className="mb-0">Stripe</h3>
+            <h3 className="mb-0">{t('Stripe')}</h3>
           </CardHeader>
           <Form>
             <div className="pl-lg-4">

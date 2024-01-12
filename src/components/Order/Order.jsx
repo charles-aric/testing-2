@@ -60,7 +60,7 @@ const GET_CONFIGURATION = gql`
 `;
 
 function Order(props) {
-  const { order } = props;
+  const { order, onClose } = props;
   const [reason, reasonSetter] = useState("");
   const [selectedRider, selectedRiderSetter] = useState("");
   const [selectedStatus, selectedStatusSetter] = useState("");
@@ -216,13 +216,13 @@ function Order(props) {
                                     }}
                                   >
                                     {order.status === true
-                                      ? "Accepted"
-                                      : "Accept"}
+                                      ? t('Accepted')
+                                      : t('Accept')}
                                   </Button>
                                 </InputGroupAddon>
                                 <Input
                                   style={{ marginLeft: "5px" }}
-                                  placeholder="Reason if rejected..."
+                                  placeholder={t('ReasonIfRejected')}
                                   value={order.reason || reason}
                                   // readOnly={status === false}
                                   onChange={(event) => {
@@ -246,11 +246,13 @@ function Order(props) {
                                           },
                                         });
                                       }
-                                    }}
+                                      onClose();
+                                    }
+                                  }
                                   >
                                     {order.status === false
-                                      ? "Cancelled"
-                                      : "Cancel"}
+                                      ? t('Cancelled')
+                                      : t('Cancel')}
                                   </Button>
                                 </InputGroupAddon>
                               </InputGroup>
@@ -277,7 +279,7 @@ function Order(props) {
                         className="form-control-label"
                         htmlFor="input-rider"
                       >
-                        {t("Available Riders")}
+                        {t("AvailableRiders")}
                       </label>
                       <FormGroup>
                         <InputGroup>
@@ -348,7 +350,7 @@ function Order(props) {
                                       }
                                     }}
                                   >
-                                    Assign
+                                    {t("Assign")}
                                   </Button>
                                 );
                               }}
@@ -362,7 +364,7 @@ function Order(props) {
                         className="form-control-label"
                         htmlFor="rider-name"
                       >
-                        {t("Assigned To")}
+                        {t("AssignedTo")}
                       </label>
                       <FormGroup>
                         <Input
@@ -377,7 +379,7 @@ function Order(props) {
                   </Row>
                   <Row>
                     <Col xs="8">
-                      <h3 className="mb-1">{t("Order Status")}</h3>
+                      <h3 className="mb-1">{t("OrderStatus")}</h3>
                     </Col>
                   </Row>
                   <Row>
@@ -386,7 +388,7 @@ function Order(props) {
                         className="form-control-label"
                         htmlFor="input-rider"
                       >
-                        {t("Select Status")}
+                        {t("SelectStatus")}
                       </label>
                       <FormGroup>
                         <InputGroup>
@@ -442,7 +444,7 @@ function Order(props) {
                                       }
                                     }}
                                   >
-                                    Assign
+                                    {t("Assign")}
                                   </Button>
                                 );
                               }}
@@ -456,7 +458,7 @@ function Order(props) {
                         className="form-control-label"
                         htmlFor="rider-name"
                       >
-                        {t("Current Status")}
+                        {t("CurrentStatus")}
                       </label>
                       <FormGroup>
                         <Input
@@ -471,7 +473,7 @@ function Order(props) {
                   </Row>
                   <Row>
                     <Col xs="8">
-                      <h3 className="mb-1">{t("Payment Status")}</h3>
+                      <h3 className="mb-1">{t("PaymentStatus")}</h3>
                     </Col>
                   </Row>
                   <Row>
@@ -480,7 +482,7 @@ function Order(props) {
                         className="form-control-label"
                         htmlFor="input-rider"
                       >
-                        {t("Select Status")}
+                        {t("SelectStatus")}
                       </label>
                       <FormGroup>
                         <InputGroup>
@@ -548,7 +550,7 @@ function Order(props) {
                                       }
                                     }}
                                   >
-                                    Assign
+                                    {t("Assign")}
                                   </Button>
                                 );
                               }}
@@ -589,7 +591,7 @@ function Order(props) {
                   }}
                   style={{ marginBottom: "1rem" }}
                 >
-                  Show/Hide
+                  {t("ShowHide")}
                 </Button>
               </Col>
             </Row>
@@ -657,7 +659,7 @@ function Order(props) {
             </Collapse>
             <Row className="align-items-center">
               <Col xs="8">
-                <h3 className="mb-1">{t("Order Details")}</h3>
+                <h3 className="mb-1">{t("OrderDetails")}</h3>
               </Col>
               <Col xs="4">
                 <Button
@@ -667,7 +669,7 @@ function Order(props) {
                   }}
                   style={{ marginBottom: "1rem" }}
                 >
-                  Show/Hide
+                  {t("ShowHide")}
                 </Button>
               </Col>
             </Row>
@@ -720,7 +722,7 @@ function Order(props) {
                                   {!!item.addons.length && (
                                     <UncontrolledDropdown>
                                       <DropdownToggle caret>
-                                        Addons
+                                        {t("Addons")}
                                       </DropdownToggle>
                                       <DropdownMenu>
                                         {item.addons.map((addon) => {
@@ -767,7 +769,7 @@ function Order(props) {
                             <FormGroup>
                               <ListGroup id="input-price">
                                 <ListGroupItem className="justify-content-between">
-                                  Subtotal
+                                  {t('Subtotal')}
                                   <Badge
                                     style={{
                                       fontSize: "12px",
@@ -784,7 +786,7 @@ function Order(props) {
                                   </Badge>
                                 </ListGroupItem>
                                 <ListGroupItem className="justify-content-between">
-                                  Delivery Charges
+                                  {t('DeliveryCharges')}
                                   <Badge
                                     style={{
                                       fontSize: "12px",
@@ -797,7 +799,7 @@ function Order(props) {
                                   </Badge>
                                 </ListGroupItem>
                                 <ListGroupItem className="justify-content-between">
-                                  Total
+                                  {t('Total')}
                                   <Badge
                                     style={{
                                       fontSize: "12px",
@@ -825,7 +827,7 @@ function Order(props) {
                             <FormGroup>
                               <ListGroup id="input-payment">
                                 <ListGroupItem className="justify-content-between">
-                                  Payment Method
+                                  {t("PaymentMethod")}
                                   <Badge
                                     style={{
                                       fontSize: "12px",
@@ -839,7 +841,7 @@ function Order(props) {
                                 </ListGroupItem>
                                 {order.order_status !== "DELIVERED" && (
                                   <ListGroupItem className="justify-content-between">
-                                    Paid Amount
+                                    {t('PaidAmount')}
                                     <Badge
                                       style={{
                                         fontSize: "12px",

@@ -172,7 +172,7 @@ function Rider(props) {
                             <Input
                               className="form-control-alternative"
                               id="input-name"
-                              placeholder="e.g John Doe"
+                              placeholder={t('PHRiderName')}
                               type="text"
                               maxLength="20"
                               value={name}
@@ -206,14 +206,14 @@ function Rider(props) {
                             <Input
                               className="form-control-alternative"
                               id="input-username"
-                              placeholder="e.g ridername007"
+                              placeholder={t('PHUserName')}
                               maxLength="20"
                               type="text"
                               value={username}
                               onChange={(event) => {
-                                usernameSetter(
-                                  event.target.value.toLowerCase()
-                                );
+                                const enteredUsername = event.target.value;
+                                const usernameWithoutSpaces = enteredUsername.replace(/\s/g, '');
+                                usernameSetter(usernameWithoutSpaces.toLowerCase());
                               }}
                               onBlur={(event) => {
                                 onBlur(
@@ -250,7 +250,8 @@ function Rider(props) {
                               id="input-phone"
                               placeholder="e.g 923458989989"
                               maxLength="20"
-                              type="number"
+                              type="tel"
+                              min="0"
                               value={phone}
                               onChange={(event) => {
                                 phoneSetter(event.target.value);

@@ -14,7 +14,6 @@ import {
   FormGroup,
   Input,
 } from "reactstrap";
-
 function AdminNavbar(props) {
   const handleChange = (event) => {
     localStorage.setItem("enatega-language", event.target.value);
@@ -62,6 +61,7 @@ function AdminNavbar(props) {
                     <option value="zh">中文</option>
                     <option value="km">ភាសាខ្មែរ</option>
                     <option value="fr">français</option>
+                    <option value="ar">العربية</option>
                   </Input>
                 </FormGroup>
               </NavItem>
