@@ -5,6 +5,7 @@ import de from "./translations/de";
 import fr from "./translations/fr";
 import km from "./translations/km";
 import zh from "./translations/zh";
+import ar from "./translations/ar";
 i18n.use(initReactI18next).init({
   // we init with resources
   resources: {
@@ -13,6 +14,7 @@ i18n.use(initReactI18next).init({
     fr,
     km,
     zh,
+    ar
   },
   lng: localStorage.getItem("enatega-language") || "en",
   fallbackLng: "en",

@@ -172,7 +172,7 @@ function Rider(props) {
                             <Input
                               className="form-control-alternative"
                               id="input-name"
-                              placeholder="e.g John Doe"
+                              placeholder={t('PHRiderName')}
                               type="text"
                               maxLength="20"
                               value={name}
@@ -206,7 +206,7 @@ function Rider(props) {
                             <Input
                               className="form-control-alternative"
                               id="input-username"
-                              placeholder="e.g ridername007"
+                              placeholder={t('PHUserName')}
                               maxLength="20"
                               type="text"
                               value={username}
